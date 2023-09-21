@@ -88,7 +88,7 @@ fun SearchSection(viewModel: Churchviewmodel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(all = 24.dp),
+            .padding(all = 12.dp),
         verticalAlignment = Alignment.CenterVertically
 
     ) {
@@ -160,8 +160,8 @@ fun SearchSection(viewModel: Churchviewmodel) {
 fun UserWelcomeStatement() {
     Row(
         modifier = Modifier
-            .padding(horizontal = 24.dp)
-            .padding(top = 28.dp)
+            .padding(horizontal = 12.dp)
+            .padding(top = 8.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {

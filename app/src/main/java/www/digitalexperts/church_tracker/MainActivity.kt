@@ -48,7 +48,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import www.digitalexperts.church_tracker.Util.Constants
@@ -79,20 +81,20 @@ class MainActivity : ComponentActivity() {
                     ),
                     BottomNavigationItem(
                         title = "Teachings",
-                        selectedIcon = Icons.Filled.Create,
-                        unselectedIcon = Icons.Outlined.Create,
+                        selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_baseline_local_movies_24),
+                        unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_baseline_local_movies_24),
                         hasNews = false,
                     ),
                     BottomNavigationItem(
                         title = "Pdf",
-                        selectedIcon = Icons.Filled.List,
-                        unselectedIcon = Icons.Outlined.List,
+                        selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_baseline_local_library_24),
+                        unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_baseline_local_library_24),
                         hasNews = false,
                     ),
                     BottomNavigationItem(
                         title = "Live Radio",
-                        selectedIcon = Icons.Filled.AddCircle,
-                        unselectedIcon = Icons.Outlined.AddCircle,
+                        selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_jslrd),
+                        unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_jslrd),
                         hasNews = false,
                     )
                 )
@@ -143,7 +145,8 @@ class MainActivity : ComponentActivity() {
                                     }) {
                                         Icon(
                                             imageVector = Icons.Default.Menu,
-                                            contentDescription = "menu icon"
+                                            contentDescription = "menu icon",
+                                            tint = Color(0xFFFFFFFF)
                                         )
                                     }
                                 }
@@ -158,7 +161,8 @@ class MainActivity : ComponentActivity() {
                                             topEnd = 30.dp
                                         )
                                     ),
-                                containerColor = Color(0xFFFFFFFF)
+                               // containerColor = Color(0xFFFFFFFF),
+                                contentColor = Color(0xFF888888)
                             ) {
                                 items.forEachIndexed { index, bottomNavigationItem ->
 
