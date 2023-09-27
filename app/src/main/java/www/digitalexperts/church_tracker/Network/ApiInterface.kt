@@ -5,6 +5,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 import www.digitalexperts.church_tracker.Data.models.*
+import www.digitalexperts.church_tracker.models.Folderz
 import www.digitalexperts.church_tracker.models.Pastors
 
 interface ApiInterface {
@@ -15,13 +16,12 @@ interface ApiInterface {
     @POST("search.php")
     @FormUrlEncoded
     suspend  fun searchresults(@Field("search") q: String?): Churches
-/*
 
     //getting teaching folders
     @POST("getfolders.php")
     @FormUrlEncoded
-    suspend fun  getfolders(@Field("folder") q:String?):Folderz
-
+    suspend fun  getfolders(@Field("folder") q:String?): Folderz
+/*
     //geting contents
     @POST("folderitems.php")
     @FormUrlEncoded

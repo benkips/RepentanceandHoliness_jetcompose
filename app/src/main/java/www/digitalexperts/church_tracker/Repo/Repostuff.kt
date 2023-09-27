@@ -8,16 +8,16 @@ class Repostuff @Inject constructor (private val apiInterface: ApiInterface):Bas
 
     suspend fun getSearchresults(query: String) =
         safeApiCall{apiInterface.searchresults(query)}
-/*
+
     suspend fun  getteachingfolders()= safeApiCall {
         apiInterface.getfolders("teachings") }
+    /*
+        suspend fun  getteachingpdfs()= safeApiCall {
+            apiInterface.getfolders("magazines") }
 
-    suspend fun  getteachingpdfs()= safeApiCall {
-        apiInterface.getfolders("magazines") }
-
-    suspend fun  getcontents(x:String,y:String)=safeApiCall {
-        apiInterface.getpdfitems(x,y)
-    }*/
+        suspend fun  getcontents(x:String,y:String)=safeApiCall {
+            apiInterface.getpdfitems(x,y)
+        }*/
     suspend fun getpastors(x:String)=safeApiCall {
     Log.d("repo", "entry: ")
         apiInterface.getingpastors(x)
