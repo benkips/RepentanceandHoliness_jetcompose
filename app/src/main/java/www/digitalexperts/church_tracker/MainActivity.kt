@@ -170,6 +170,11 @@ class MainActivity : ComponentActivity() {
                                         selected = selectedItemIndex == index,
                                         onClick = {
                                             selectedItemIndex = index
+                                            if(bottomNavigationItem.title.equals("Home")){
+                                                navController.navigate(Constants.Screens.MAIN_SCREEN)
+                                            }else if (bottomNavigationItem.title.equals("Teachings")){
+                                                navController.navigate(Constants.Screens.TEACHINGS_SCREEN)
+                                            }
                                             //navController.navigate(Constants.Screens.CHURCH_DETAIL_SCREEN)
                                         },
                                         icon = {

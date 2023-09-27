@@ -210,8 +210,6 @@ fun ChurchesListing(viewModel: Churchviewmodel,navController: NavController) {
 
 
 }
-
-
 @Composable
 fun ChurchList(churches: ArrayList<ChurchesItem>,navController: NavController,viewModel: Churchviewmodel) {
     Surface(
@@ -231,6 +229,8 @@ fun ChurchList(churches: ArrayList<ChurchesItem>,navController: NavController,vi
 
     }
 }
+
+
 
 @Composable
 fun ChurchItem(item: ChurchesItem,navController: NavController,viewModel: Churchviewmodel) {

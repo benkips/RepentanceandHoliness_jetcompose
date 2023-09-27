@@ -57,7 +57,7 @@ fun ChurchDetailScreen(navController: NavController, viewModel: Churchviewmodel,
         }
 
         val viewPastorPerChurch = viewModel2.pastorsResponse?.collectAsState()
-        Log.d("ChurchDetail", "ChurchDetail: " + viewPastorPerChurch)
+        Log.d("PastorsDetail", "PastorsDetail: " + viewPastorPerChurch)
         viewPastorPerChurch?.value.let {
                 when (it) {
                         is Resource.Failure -> {
