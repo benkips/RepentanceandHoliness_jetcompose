@@ -42,7 +42,7 @@ import www.digitalexperts.church_tracker.models.FolderzItem
 @Composable
 fun Teachings(navController: NavController, viewModel: Folderviewmodel) {
     val foldertype = viewModel.foldername.collectAsState()
-    LaunchedEffect(key1 =foldertype.value ){
+    LaunchedEffect(key1 = foldertype.value) {
         viewModel.getTeachings()
     }
 
@@ -51,7 +51,9 @@ fun Teachings(navController: NavController, viewModel: Folderviewmodel) {
     Folderlist?.value.let {
         when (it) {
             is Resource.Failure -> {
-                RetrySection(error = it.errorBody?.string().toString(), onRetry ={ viewModel.getTeachings()})
+                RetrySection(
+                    error = it.errorBody?.string().toString(),
+                    onRetry = { viewModel.getTeachings() })
             }
 
             Resource.Loading -> {
@@ -60,7 +62,7 @@ fun Teachings(navController: NavController, viewModel: Folderviewmodel) {
 
             is Resource.Success -> {
 
-                FolderList(it.value,navController,viewModel)
+                FolderList(it.value, navController, viewModel)
             }
 
             else -> {
@@ -70,15 +72,18 @@ fun Teachings(navController: NavController, viewModel: Folderviewmodel) {
     }
 
     //folderdetails
- //   val foldertype = viewModel.foldername.collectAsState()
-
+    //   val foldertype = viewModel.foldername.collectAsState()
 
 
 }
 
 
 @Composable
-fun FolderList(folders: ArrayList<FolderzItem>,navController: NavController,viewModel: Folderviewmodel) {
+fun FolderList(
+    folders: ArrayList<FolderzItem>,
+    navController: NavController,
+    viewModel: Folderviewmodel
+) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -88,22 +93,33 @@ fun FolderList(folders: ArrayList<FolderzItem>,navController: NavController,view
             Modifier.padding(10.dp)
         ) {
             items(folders) {
-                TeachingCardItem(item = it,R.drawable.ic_baseline_folder_special_24,viewModel)
+                TeachingCardItem(
+                    navController = navController,
+                    item = it,
+                    R.drawable.ic_baseline_folder_special_24,
+                    viewModel
+                )
             }
         }
 
     }
 }
+
 @Composable
-fun TeachingCardItem(item: FolderzItem,imagevector: Int,viewModel: Folderviewmodel) {
+fun TeachingCardItem(
+    navController: NavController,
+    item: FolderzItem,
+    imagevector: Int,
+    viewModel: Folderviewmodel
+) {
 
     Card(
         elevation = 4.dp,
         modifier = Modifier
             .padding(top = 8.dp, end = 5.dp)
             .clickable {
-/*              viewModel.setUpdating(item)
-                navController.navigate(Constants.Screens.CHURCH_DETAIL_SCREEN + "/${item.id}")*/
+                viewModel.setUpdating(item)
+                navController.navigate(Constants.Screens.WEBVIEW_SCREEN)
             }
     ) {
 
@@ -127,7 +143,7 @@ fun TeachingCardItem(item: FolderzItem,imagevector: Int,viewModel: Folderviewmod
                 )
                 Row {
 
-                    Text(text = "("+item.count.toString()+")")
+                    Text(text = "(" + item.count.toString() + ")")
                     Text(
                         text = "items",
                         fontWeight = FontWeight.SemiBold,
