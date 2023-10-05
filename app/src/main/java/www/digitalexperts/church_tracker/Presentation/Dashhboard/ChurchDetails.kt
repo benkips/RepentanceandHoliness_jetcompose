@@ -61,7 +61,7 @@ fun ChurchDetailScreen(navController: NavController, viewModel: Churchviewmodel,
         viewPastorPerChurch?.value.let {
                 when (it) {
                         is Resource.Failure -> {
-                                RetrySection(error = it.errorBody?.string().toString(), onRetry ={ viewModel2.getPastors(id.value)})
+                                RetrySection(error = it.errorBody!!, onRetry ={ viewModel2.getPastors(id.value)})
                         }
 
                         Resource.Loading -> {

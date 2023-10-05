@@ -52,7 +52,7 @@ fun Teachings(navController: NavController, viewModel: Folderviewmodel) {
         when (it) {
             is Resource.Failure -> {
                 RetrySection(
-                    error = it.errorBody?.string().toString(),
+                    error = it.errorBody!!,
                     onRetry = { viewModel.getTeachings() })
             }
 

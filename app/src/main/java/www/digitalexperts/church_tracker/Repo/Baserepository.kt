@@ -4,6 +4,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import www.digitalexperts.church_tracker.Network.Resource
+import java.net.ConnectException
+import java.net.UnknownHostException
 
 abstract class Baserepository {
 
@@ -16,10 +18,16 @@ abstract class Baserepository {
             }catch (throwable: Throwable) {
                 when (throwable) {
                     is HttpException -> {
-                        Resource.Failure(false, throwable.code(), throwable.response()?.errorBody())
+                        Resource.Failure(true, throwable.code(), throwable.response()?.errorBody().toString())
+                    }
+                    is ConnectException -> {
+                        Resource.Failure(false, null, "No internet access!")
+                    }
+                    is UnknownHostException -> {
+                        Resource.Failure(false, null, "No internet access!")
                     }
                     else -> {
-                        Resource.Failure(true, null, null)
+                        Resource.Failure(false, null,"OOp!something went wrong" )
                     }
 
                 }
