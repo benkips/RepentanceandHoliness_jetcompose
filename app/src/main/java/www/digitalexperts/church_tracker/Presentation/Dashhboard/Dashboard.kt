@@ -191,7 +191,7 @@ fun ChurchesListing(viewModel: Churchviewmodel,navController: NavController) {
     viewAllchurchesList?.value.let {
         when (it) {
             is Resource.Failure -> {
-              RetrySection(error = it.errorBody?.string().toString(), onRetry ={viewModel.search("nairobi")} )
+              RetrySection(error = it.errorBody!!, onRetry ={viewModel.search("nairobi")} )
             }
 
             Resource.Loading -> {
