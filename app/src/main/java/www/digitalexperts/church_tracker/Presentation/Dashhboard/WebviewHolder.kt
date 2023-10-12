@@ -11,6 +11,7 @@ import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
@@ -44,11 +45,16 @@ class WebviewHolder(context: Context) {
     private var webViewClient: WebViewClient = object : WebViewClient() {
         override fun onReceivedError(
             view: WebView?,
-            request: WebResourceRequest?,
-            error: WebResourceError?
+            errorCode: Int,
+            description: String?,
+            failingUrl: String?
         ) {
-            super.onReceivedError(view, request, error)
+            val myerrorpage = "file:///android_asset/android/errorpage.html";
+            webview.loadUrl(myerrorpage)
+
         }
+
+
 
         override fun shouldOverrideUrlLoading(
             view: WebView?,
@@ -69,8 +75,8 @@ class WebviewHolder(context: Context) {
 
     init {
         webview.layoutParams = ViewGroup.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.MATCH_PARENT
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
         )
         webview.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_BACK && event.action == MotionEvent.ACTION_UP && webview.canGoBack()) {
