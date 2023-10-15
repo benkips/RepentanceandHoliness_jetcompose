@@ -6,5 +6,6 @@ class Constants {
        const val CHURCH_DETAIL_SCREEN="church_details_screen"
        const val TEACHINGS_SCREEN="teachings"
        const val WEBVIEW_SCREEN="wvinfo"
+       const val RADIO_SCREEN="radio"
     }
 }

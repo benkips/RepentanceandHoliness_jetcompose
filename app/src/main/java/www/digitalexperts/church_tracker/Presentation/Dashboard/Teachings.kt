@@ -1,4 +1,4 @@
-package www.digitalexperts.church_tracker.Presentation.Dashhboard
+package www.digitalexperts.church_tracker.Presentation.Dashboard
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -19,23 +19,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
-import www.digitalexperts.church_tracker.Data.models.ChurchesItem
 import www.digitalexperts.church_tracker.Network.Resource
 import www.digitalexperts.church_tracker.R
 import www.digitalexperts.church_tracker.Util.Constants
 import www.digitalexperts.church_tracker.Util.FullScreenProgressbar
 import www.digitalexperts.church_tracker.Util.RetrySection
-import www.digitalexperts.church_tracker.Viewmodels.Churchviewmodel
 import www.digitalexperts.church_tracker.Viewmodels.Folderviewmodel
 import www.digitalexperts.church_tracker.models.FolderzItem
 

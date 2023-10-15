@@ -6,10 +6,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import www.digitalexperts.church_tracker.Presentation.Dashhboard.ChurchDetailScreen
-import www.digitalexperts.church_tracker.Presentation.Dashhboard.MainDashboard
-import www.digitalexperts.church_tracker.Presentation.Dashhboard.Teachings
-import www.digitalexperts.church_tracker.Presentation.Dashhboard.Webinfo
+import www.digitalexperts.church_tracker.Presentation.Dashboard.ChurchDetailScreen
+import www.digitalexperts.church_tracker.Presentation.Dashboard.MainDashboard
+import www.digitalexperts.church_tracker.Presentation.Dashboard.Teachings
+import www.digitalexperts.church_tracker.Presentation.Dashboard.Webinfo
 import www.digitalexperts.church_tracker.Util.Constants
 import www.digitalexperts.church_tracker.Viewmodels.Churchviewmodel
 import www.digitalexperts.church_tracker.Viewmodels.Folderviewmodel
