@@ -174,6 +174,8 @@ class MainActivity : ComponentActivity() {
                                                 navController.navigate(Constants.Screens.MAIN_SCREEN)
                                             }else if (bottomNavigationItem.title.equals("Teachings")){
                                                 navController.navigate(Constants.Screens.TEACHINGS_SCREEN)
+                                            }else if (bottomNavigationItem.title.equals("Live Radio")){
+                                                navController.navigate(Constants.Screens.RADIO_SCREEN)
                                             }
                                             //navController.navigate(Constants.Screens.CHURCH_DETAIL_SCREEN)
                                         },

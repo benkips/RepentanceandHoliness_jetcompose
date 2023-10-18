@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import www.digitalexperts.church_tracker.Presentation.Dashboard.ChurchDetailScreen
 import www.digitalexperts.church_tracker.Presentation.Dashboard.MainDashboard
+import www.digitalexperts.church_tracker.Presentation.Dashboard.Radio
 import www.digitalexperts.church_tracker.Presentation.Dashboard.Teachings
 import www.digitalexperts.church_tracker.Presentation.Dashboard.Webinfo
 import www.digitalexperts.church_tracker.Util.Constants
@@ -20,6 +21,7 @@ sealed class  Screens(val routes:String){
     object  Church_Detail:Screens(routes = Constants.Screens.CHURCH_DETAIL_SCREEN)
     object  Teachings:Screens(routes = Constants.Screens.TEACHINGS_SCREEN)
     object  Webinfo:Screens(routes = Constants.Screens.WEBVIEW_SCREEN)
+    object  Radio:Screens(routes = Constants.Screens.RADIO_SCREEN)
 }
 
 
@@ -50,6 +52,10 @@ fun SetupNavHost(navController: NavHostController) {
         composable(route =Screens.Webinfo.routes ){ backStackEntry ->
 
             Webinfo( viewModel =folderviewmodel)
+        }
+        composable(route =Screens.Radio.routes ){ backStackEntry ->
+
+            Radio()
         }
     }
 }
