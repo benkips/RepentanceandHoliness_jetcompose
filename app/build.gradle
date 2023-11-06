@@ -3,14 +3,15 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id "kotlin-kapt"
     id "com.google.dagger.hilt.android"
+    id 'com.google.gms.google-services'
 }
 
 android {
-    namespace 'www.digitalexperts.church_tracker'
+    namespace 'www.digitalexperts.church_traker'
     compileSdk 34
 
     defaultConfig {
-        applicationId "www.digitalexperts.church_tracker"
+        applicationId "www.digitalexperts.church_traker"
         minSdk 21
         targetSdk 33
         versionCode 1
@@ -91,6 +92,11 @@ dependencies {
     //implementation 'androidx.compose.material3:material3'
     implementation("androidx.compose.material3:material3:1.1.1")
     implementation("androidx.compose.material3:material3-window-size-class:1.1.1")
+    //exoplayer
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.13.3'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.13.3'
+
+
 }
 kapt {
     correctErrorTypes true
