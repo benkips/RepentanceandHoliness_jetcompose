@@ -96,6 +96,9 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-core:2.13.3'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.13.3'
 
+    implementation 'io.github.farimarwat:permissionmate-compose:1.1'
+
+
 
 }
 kapt {

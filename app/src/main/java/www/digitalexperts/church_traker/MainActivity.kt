@@ -1,9 +1,12 @@
 package www.digitalexperts.church_traker
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconButton
@@ -34,6 +37,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -42,6 +46,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import com.farimarwat.permissionmate.PMate
+import com.farimarwat.permissionmate.rememberPermissionMateState
 import kotlinx.coroutines.launch
 import www.digitalexperts.church_traker.Util.Constants
 
@@ -63,6 +69,24 @@ class MainActivity : ComponentActivity() {
                 }
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val Scope = rememberCoroutineScope()
+
+
+                //creating list
+                /*val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                } else {
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                }  */
+
+                val permission = listOf(
+                    PMate(android.Manifest.permission.CAMERA,false,"Camera permission is not necessary. You can skip it"),
+
+                )
+                //creating state
+                val pms = rememberPermissionMateState(permissions = permission)
+
+                pms.start()
+
                 val items = listOf(
                     BottomNavigationItem(
                         title = "Home",

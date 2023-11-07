@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -61,6 +62,16 @@ class BackgroundPlayService: Service() {
         initPlayerNotificationManager()
 
         playerNotificationManager.setPlayer(exoPlayer)
+        playerNotificationManager.apply {
+            //setOngoing(true)
+            setUseNextAction(false)
+            setUsePreviousAction(false)
+            setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+            setFastForwardIncrementMs(0)
+            //setOngoing(true)
+            setUseNavigationActions(false)
+            setRewindIncrementMs(0)
+        }
 
     }
 
@@ -81,7 +92,7 @@ class BackgroundPlayService: Service() {
                 }
 
                 override fun getCurrentContentText(player: Player): CharSequence? {
-                    return "reference/context"
+                    return "Live Streaming"
                 }
 
                 override fun getCurrentSubText(player: Player): CharSequence? {
@@ -103,6 +114,7 @@ class BackgroundPlayService: Service() {
                     stopForeground(true)
                 }
             }
+
         )
     }
 

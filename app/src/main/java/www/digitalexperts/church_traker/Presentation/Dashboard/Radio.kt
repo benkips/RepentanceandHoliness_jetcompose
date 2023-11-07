@@ -163,7 +163,7 @@ fun PlayerButtons(
     playerButtonSize: Dp = 72.dp,
     sideButtonSize: Dp = 42.dp
 ) {
-    val context=LocalContext
+        val context=LocalContext.current
 
         Row(
         modifier = modifier.fillMaxWidth(),
