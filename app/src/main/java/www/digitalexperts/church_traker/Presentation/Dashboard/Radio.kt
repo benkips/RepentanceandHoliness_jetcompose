@@ -46,11 +46,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import www.digitalexperts.church_traker.R
 import www.digitalexperts.church_traker.BackgroundServices.BackgroundPlayService
 import www.digitalexperts.church_traker.BackgroundServices.MediaObject
 
-
-import www.digitalexperts.church_traker.R
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
@@ -83,17 +82,9 @@ val TAG = "MainScreen"
 
 
 }
-fun initService(context: Context) {
-    Log.d(TAG, "initService()")
-
-    val intent = Intent((context as Activity).applicationContext!!, BackgroundPlayService::class.java)
-    (context as Activity).applicationContext!!.bindService(intent, connection, Context.BIND_AUTO_CREATE)
-}
 
 
-fun unBindService(context: Context) {
 
-}
 
 @Composable
 fun Radio() {
@@ -127,6 +118,7 @@ fun Radio() {
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
                 PlayerButtons(modifier = Modifier.padding(vertical = 8.dp))
+                Otherbtns()
             }
 
 

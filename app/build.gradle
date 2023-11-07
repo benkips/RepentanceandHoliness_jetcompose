@@ -97,6 +97,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.13.3'
 
     implementation 'io.github.farimarwat:permissionmate-compose:1.1'
+    implementation 'androidx.work:work-runtime-ktx:2.7.0'
 
 
 

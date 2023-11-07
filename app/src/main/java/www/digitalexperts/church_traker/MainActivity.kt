@@ -72,14 +72,16 @@ class MainActivity : ComponentActivity() {
 
 
                 //creating list
-                /*val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    android.Manifest.permission.POST_NOTIFICATIONS
+                var android13perm=""
+                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                     android13perm=android.Manifest.permission.POST_NOTIFICATIONS
                 } else {
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                }  */
+                     android13perm=android.Manifest.permission.READ_EXTERNAL_STORAGE
+                }
 
                 val permission = listOf(
                     PMate(android.Manifest.permission.CAMERA,false,"Camera permission is not necessary. You can skip it"),
+                    PMate(android13perm,true,"permission is  necessary. You can skip it"),
 
                 )
                 //creating state

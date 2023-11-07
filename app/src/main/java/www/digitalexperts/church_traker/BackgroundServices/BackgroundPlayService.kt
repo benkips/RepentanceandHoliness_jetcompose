@@ -88,7 +88,9 @@ class BackgroundPlayService: Service() {
 
                 override fun createCurrentContentIntent(player: Player): PendingIntent? {
                     val intent = Intent(context, MainActivity::class.java)
-                    return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                    return PendingIntent.getActivity(context, 0, intent,
+                        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                             )
                 }
 
                 override fun getCurrentContentText(player: Player): CharSequence? {

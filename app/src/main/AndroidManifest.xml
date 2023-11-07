@@ -45,7 +45,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <service android:name=".BackgroundServices.BackgroundPlayService"/>
+        <service
+            android:name=".BackgroundServices.BackgroundPlayService"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>
