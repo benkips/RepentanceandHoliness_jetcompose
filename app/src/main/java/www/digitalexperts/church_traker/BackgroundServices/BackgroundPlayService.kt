@@ -67,17 +67,17 @@ class BackgroundPlayService: Service() {
             setUseNextAction(false)
             setUsePreviousAction(false)
             setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-            setFastForwardIncrementMs(0)
+/*            setFastForwardIncrementMs(0)
             //setOngoing(true)
             setUseNavigationActions(false)
-            setRewindIncrementMs(0)
+            setRewindIncrementMs(0)*/
         }
 
     }
 
     private fun initPlayerNotificationManager() {
 
-        Log.d(TAG, "initPlayerNotificationManager()")
+       /* Log.d(TAG, "initPlayerNotificationManager()")
         playerNotificationManager = PlayerNotificationManager.createWithNotificationChannel(
             this, channelId, R.string.channel_name, R.string.channel_desc,
             notificationId, object : PlayerNotificationManager.MediaDescriptionAdapter{
@@ -117,7 +117,7 @@ class BackgroundPlayService: Service() {
                 }
             }
 
-        )
+        )*/
     }
 
     private fun releasePlayer(){

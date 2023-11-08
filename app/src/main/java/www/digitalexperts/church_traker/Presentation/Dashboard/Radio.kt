@@ -7,6 +7,9 @@ import android.content.ServiceConnection
 import android.os.IBinder
 import android.util.Log
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -46,22 +49,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
+import androidx.media3.common.Player
 import www.digitalexperts.church_traker.R
 import www.digitalexperts.church_traker.BackgroundServices.BackgroundPlayService
 import www.digitalexperts.church_traker.BackgroundServices.MediaObject
+import www.digitalexperts.church_traker.BackgroundServices.MediaService
+import www.digitalexperts.church_traker.BackgroundServices.MusicServiceHandler
+import www.digitalexperts.church_traker.BackgroundServices.PlayerService
+import www.digitalexperts.church_traker.Viewmodels.Churchviewmodel
+import www.digitalexperts.church_traker.Viewmodels.MusicViewModel
 
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 lateinit var backgroundPlayService: BackgroundPlayService
-
+var player: Player? = null
 lateinit var mediaObj: MediaObject
 val TAG = "MainScreen"
+private const val MEDIA_URL = "https://traffic.libsyn.com/secure/adbackstage/ADB162-1.5.mp3?dest-id=2710847"
 
-
-
-
- var connection = object : ServiceConnection {
+ /*var connection = object : ServiceConnection {
     val contexts =  LocalContext
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -81,14 +90,32 @@ val TAG = "MainScreen"
     }
 
 
-}
+}*/
 
+
+/*private val playerServiceConnection = object : ServiceConnection {
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        val binder = service as PlayerService.ServiceBinder
+        player = binder.getPlayerService().player!!
+        player?.prepare()
+        player?.playWhenReady = false
+        player?.seekTo(0, 0)
+        val mediaItem = MediaItem.fromUri(MEDIA_URL)
+
+        player?.setMediaItem(mediaItem)
+        player?.prepare()
+        player?.play()
+    }
+
+    override fun onServiceDisconnected(name: ComponentName?) {
+        TODO("Not yet implemented")
+    }
+}*/
 
 
 
 @Composable
-fun Radio() {
-
+fun Radio(isMusicPlaying: Boolean,viewModel: MusicViewModel) {
 
     Surface(
         modifier = Modifier
@@ -117,7 +144,7 @@ fun Radio() {
                 modifier = Modifier.weight(10f)
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
-                PlayerButtons(modifier = Modifier.padding(vertical = 8.dp))
+                PlayerButtons(modifier = Modifier.padding(vertical = 8.dp),viewModel)
                 Otherbtns()
             }
 
@@ -152,11 +179,11 @@ fun SongDescription(
 @Composable
 fun PlayerButtons(
     modifier: Modifier = Modifier,
-    playerButtonSize: Dp = 72.dp,
-    sideButtonSize: Dp = 42.dp
+    viewModel: MusicViewModel
 ) {
-        val context=LocalContext.current
-
+    val context=LocalContext.current
+    val playerButtonSize: Dp = 72.dp
+    val sideButtonSize: Dp = 42.dp
         Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -168,16 +195,19 @@ fun PlayerButtons(
         val midlebtnModifier = modifier
             .size(playerButtonSize)
             .semantics { role = Role.Button }
-            .clickable {/*initService(LocalContext.current)*/
+            .clickable {
+
+            viewModel.setMusicItems()
+
+            /*initService(LocalContext.current)*/
                /* if (audioFlag.value) {
                     audioFlag.value = false
                 } else {
                     audioFlag.value = true
                 }*/
-                Log.d(TAG, "initService()")
-                val intent = Intent((context as Activity).applicationContext!!, BackgroundPlayService::class.java)
-                context.applicationContext!!.bindService(intent, connection, Context.BIND_AUTO_CREATE)
-
+               /* Log.d(TAG, "initService()")
+                val intent = Intent((context as Activity).applicationContext!!, PlayerService::class.java)
+                context.applicationContext!!.bindService(intent, playerServiceConnection, Context.BIND_AUTO_CREATE)*/
             }
 
         Icon(

@@ -13,7 +13,9 @@ import www.digitalexperts.church_traker.Presentation.Dashboard.Webinfo
 import www.digitalexperts.church_traker.Util.Constants
 import www.digitalexperts.church_traker.Viewmodels.Churchviewmodel
 import www.digitalexperts.church_traker.Viewmodels.Folderviewmodel
+import www.digitalexperts.church_traker.Viewmodels.MusicViewModel
 import www.digitalexperts.church_traker.Viewmodels.Pastorsviewmodel
+import androidx.activity.viewModels
 
 sealed class  Screens(val routes:String){
     object  Main:Screens(routes = Constants.Screens.MAIN_SCREEN)
@@ -30,6 +32,7 @@ fun SetupNavHost(navController: NavHostController) {
     val ChurchViewModel= hiltViewModel<Churchviewmodel>()
     val PastorsViewModel= hiltViewModel<Pastorsviewmodel>()
     val folderviewmodel= hiltViewModel<Folderviewmodel>()
+     val musicViewModel= hiltViewModel<MusicViewModel>()
 
     NavHost(navController =navController,
        startDestination = Screens.Main.routes){
@@ -54,7 +57,8 @@ fun SetupNavHost(navController: NavHostController) {
         }
         composable(route =Screens.Radio.routes ){ backStackEntry ->
 
-            Radio()
+            Radio( isMusicPlaying = musicViewModel.isMusicPlaying,musicViewModel)
         }
     }
+
 }

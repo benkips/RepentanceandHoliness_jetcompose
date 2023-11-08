@@ -1,3 +1,5 @@
+package www.digitalexperts.church_traker.BackgroundServices
+
 import android.app.Notification
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
@@ -6,18 +8,21 @@ import android.app.job.JobInfo.PRIORITY_MAX
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.media.session.MediaSession
+import  androidx.media3.session.MediaSession
 import android.os.Binder
+import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.ui.PlayerNotificationManager
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerNotificationManager
+
 import www.digitalexperts.church_traker.MainActivity
 import www.digitalexperts.church_traker.R
 import java.util.Random
 
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class PlayerService : Service() {
 
     private val iBinder = ServiceBinder()
@@ -41,6 +46,8 @@ class PlayerService : Service() {
             MediaSession.Builder(this, player!!).setSessionActivity(pendingIntent()!!)
                 .setId(Random(5).toString())
                 .build()
+
+
         notificationManager = PlayerNotificationManager.Builder(this, 111, "Music Channel")
             .setChannelImportance(IMPORTANCE_HIGH)
             .setSmallIconResourceId(R.drawable.dove)
@@ -52,11 +59,14 @@ class PlayerService : Service() {
 
 
         notificationManager.setPlayer(player)
-        notificationManager.setPriority(NotificationCompat.PRIORITY_MAX)
-        notificationManager.setUseRewindAction(true)
+        /*notificationManager.setPriority(NotificationCompat.PRIORITY_MAX)*/
+        notificationManager.setUseRewindAction(false )
         notificationManager.setUseFastForwardAction(false)
         notificationManager.setUsePreviousAction(false)
         notificationManager.setUsePlayPauseActions(true)
+        notificationManager.setUseStopAction(true)
+        notificationManager.setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
     }
 
 
@@ -67,7 +77,14 @@ class PlayerService : Service() {
         notificationManager.setPlayer(null)
         player?.release()
         player = null
-        stopForeground(true)
+        mediaSession?.run {
+            player.release()
+            release()
+            mediaSession = null
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            stopForeground(STOP_FOREGROUND_DETACH)
+        }
         stopSelf()
         super.onDestroy()
     }
@@ -75,11 +92,19 @@ class PlayerService : Service() {
     private val notificationListener = object : PlayerNotificationManager.NotificationListener {
         override fun onNotificationCancelled(notificationId: Int, dismissedByUser: Boolean) {
             super.onNotificationCancelled(notificationId, dismissedByUser)
-            stopForeground(true)
-            if (player?.isPlaying!!) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                stopForeground(STOP_FOREGROUND_DETACH)
+            }
+           /* if (player?.isPlaying!!) {
                 player?.stop()
                 player?.release()
+            }*/
+            mediaSession?.run {
+                player.release()
+                release()
+                mediaSession = null
             }
+
         }
 
         override fun onNotificationPosted(
@@ -90,11 +115,12 @@ class PlayerService : Service() {
             super.onNotificationPosted(notificationId, notification, ongoing)
             startForeground(notificationId, notification)
         }
+
     }
 
     private val audioDescriptor = object : PlayerNotificationManager.MediaDescriptionAdapter {
         override fun getCurrentContentTitle(player: Player): CharSequence {
-            return player.currentMediaItem?.mediaMetadata?.albumTitle!!
+            return "JESUS IS LORD  Radio"
         }
 
         override fun createCurrentContentIntent(player: Player): PendingIntent? {
@@ -102,19 +128,19 @@ class PlayerService : Service() {
         }
 
         override fun getCurrentContentText(player: Player): CharSequence? {
-            return ""
+            return "Streaming Live"
         }
 
         override fun getCurrentLargeIcon(
             player: Player,
             callback: PlayerNotificationManager.BitmapCallback
         ): Bitmap? {
-            val bitmapDrawable: BitmapDrawable =
+            /*val bitmapDrawable: BitmapDrawable =
                 ContextCompat.getDrawable(
                     applicationContext,
-                    R.drawable.dove
-                ) as BitmapDrawable
-            return bitmapDrawable.bitmap
+                    R.drawable.logo
+                ) as BitmapDrawable*/
+            return null
         }
     }
 

@@ -1,6 +1,8 @@
 package www.digitalexperts.church_traker
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -49,17 +51,20 @@ import androidx.compose.ui.unit.dp
 import com.farimarwat.permissionmate.PMate
 import com.farimarwat.permissionmate.rememberPermissionMateState
 import kotlinx.coroutines.launch
+import www.digitalexperts.church_traker.BackgroundServices.MediaService
 import www.digitalexperts.church_traker.Util.Constants
 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val TAG = "MainActivity"
+
     @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        startMusicService()
         setContent {
             RepentanceandHolinessTheme {
                 // A surface container using the 'background' color from the theme
@@ -232,7 +237,14 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    
+    private fun startMusicService() {
+            val intent = Intent(this, MediaService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(intent)
+            } else {
+                startService(intent)
+            }
+    }
 
 }
 
