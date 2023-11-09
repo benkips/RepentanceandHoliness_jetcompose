@@ -1,5 +1,6 @@
 package www.digitalexperts.church_traker.Navigation
 
+import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -32,7 +33,7 @@ fun SetupNavHost(navController: NavHostController) {
     val ChurchViewModel= hiltViewModel<Churchviewmodel>()
     val PastorsViewModel= hiltViewModel<Pastorsviewmodel>()
     val folderviewmodel= hiltViewModel<Folderviewmodel>()
-     val musicViewModel= hiltViewModel<MusicViewModel>()
+    val musicViewModel= hiltViewModel<MusicViewModel>()
 
     NavHost(navController =navController,
        startDestination = Screens.Main.routes){

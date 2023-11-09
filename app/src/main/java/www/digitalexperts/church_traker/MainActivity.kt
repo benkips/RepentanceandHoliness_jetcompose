@@ -64,7 +64,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        startMusicService()
         setContent {
             RepentanceandHolinessTheme {
                 // A surface container using the 'background' color from the theme
@@ -119,6 +118,7 @@ class MainActivity : ComponentActivity() {
                         unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_jslrd),
                         hasNews = false,
                     )
+
                 )
 
                 ModalNavigationDrawer(
@@ -198,6 +198,7 @@ class MainActivity : ComponentActivity() {
                                                 navController.navigate(Constants.Screens.TEACHINGS_SCREEN)
                                             }else if (bottomNavigationItem.title.equals("Live Radio")){
                                                 navController.navigate(Constants.Screens.RADIO_SCREEN)
+                                                startMusicService()
                                             }
                                             //navController.navigate(Constants.Screens.CHURCH_DETAIL_SCREEN)
                                         },

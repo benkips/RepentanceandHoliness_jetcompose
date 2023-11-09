@@ -62,10 +62,11 @@ class MusicNotificationManager @Inject constructor(
             .build()
             .also {
                 it.setMediaSessionToken(mediaSession.sessionCompatToken)
-                it.setUseFastForwardActionInCompactView(true)
-                it.setUseRewindActionInCompactView(true)
-                it.setUseNextActionInCompactView(true)
-                it.setUsePreviousActionInCompactView(true)
+                it.setUseFastForwardActionInCompactView(false)
+                it.setUseRewindActionInCompactView(false)
+                it.setUseNextActionInCompactView(false)
+                it.setUsePreviousActionInCompactView(false)
+                it.setUseStopAction(true)
                 it.setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 it.setPlayer(exoPlayer)
             }
