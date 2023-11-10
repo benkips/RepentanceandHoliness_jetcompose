@@ -9,6 +9,7 @@ import android.util.Log
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -55,7 +56,6 @@ import androidx.media3.common.Player
 import www.digitalexperts.church_traker.R
 import www.digitalexperts.church_traker.BackgroundServices.BackgroundPlayService
 import www.digitalexperts.church_traker.BackgroundServices.MediaObject
-import www.digitalexperts.church_traker.BackgroundServices.MediaService
 import www.digitalexperts.church_traker.BackgroundServices.MusicServiceHandler
 import www.digitalexperts.church_traker.BackgroundServices.PlayerService
 import www.digitalexperts.church_traker.Viewmodels.Churchviewmodel
@@ -182,8 +182,10 @@ fun PlayerButtons(
     viewModel: MusicViewModel
 ) {
     val context=LocalContext.current
+    var isMusicPlaying= viewModel.isMusicPlaying
     val playerButtonSize: Dp = 72.dp
     val sideButtonSize: Dp = 42.dp
+
         Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -197,15 +199,19 @@ fun PlayerButtons(
             .semantics { role = Role.Button }
             .clickable {
 
-            viewModel.setMusicItems()
-
-            /*initService(LocalContext.current)*/
-               /* if (audioFlag.value) {
+                viewModel.setMusicItems()
+                isMusicPlaying=viewModel.isMusicPlaying
+                Toast
+                    .makeText(context, isMusicPlaying.toString(), Toast.LENGTH_SHORT)
+                    .show()
+                isMusicPlaying=false
+                /*initService(LocalContext.current)*/
+                /* if (audioFlag.value) {
                     audioFlag.value = false
                 } else {
                     audioFlag.value = true
                 }*/
-               /* Log.d(TAG, "initService()")
+                /* Log.d(TAG, "initService()")
                 val intent = Intent((context as Activity).applicationContext!!, PlayerService::class.java)
                 context.applicationContext!!.bindService(intent, playerServiceConnection, Context.BIND_AUTO_CREATE)*/
             }
@@ -219,7 +225,8 @@ fun PlayerButtons(
 
 
         Icon(
-            painter =   painterResource(R.drawable.ic_baseline_play_arrow_24),
+            painter =   painterResource( if (isMusicPlaying) R.drawable.ic_baseline_play_arrow_24
+            else R.drawable.ic_baseline_pause_24),
             contentDescription = "Play / Pause Icon",
             tint = Color.Black,
             modifier = midlebtnModifier,
@@ -268,9 +275,6 @@ fun Otherbtns() {
             onClick = { /* navController.navigate("webviews/$alltime")*/},
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier.fillMaxWidth(1f),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.Transparent
-            ),
         ) {
             Text(
                 text = "24/7 Endtime-Messages",

@@ -6,7 +6,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import javax.inject.Inject
 
 class MusicServiceHandler @Inject constructor(
-    private val exoPlayer: ExoPlayer,
+    private val exoPlayer: ExoPlayer
 ) : Player.Listener {
      init {
         exoPlayer.addListener(this)
@@ -23,7 +23,9 @@ class MusicServiceHandler @Inject constructor(
         when (playbackState) {
             ExoPlayer.STATE_BUFFERING -> {}
 
-            ExoPlayer.STATE_READY -> {}
+            ExoPlayer.STATE_READY -> {
+                exoPlayer.playWhenReady=true
+            }
 
             Player.STATE_ENDED -> {
                 // no-op
@@ -36,16 +38,11 @@ class MusicServiceHandler @Inject constructor(
     }
 
 
-    private suspend fun playPauseMusic() {
+     fun playPauseMusic() {
         if (exoPlayer.isPlaying) {
             exoPlayer.pause()
-
         } else {
             exoPlayer.play()
-            /*_musicStates.value = MusicStates.MediaPlaying(
-                isPlaying = true
-            )*/
-
         }
     }
 

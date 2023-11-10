@@ -84,7 +84,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 val permission = listOf(
-                    PMate(android.Manifest.permission.CAMERA,false,"Camera permission is not necessary. You can skip it"),
+                    PMate(android.Manifest.permission.CAMERA,true,"Camera permission is not necessary. You can skip it"),
                     PMate(android13perm,true,"permission is  necessary. You can skip it"),
 
                 )

@@ -15,13 +15,13 @@ class MusicNotificationDescriptorAdapter(
     private val context: Context,
     private val pendingIntent: PendingIntent?
 ) : PlayerNotificationManager.MediaDescriptionAdapter {
-    override fun getCurrentContentTitle(player: Player): CharSequence =
-        player.mediaMetadata.albumTitle ?: "Unknown"
+    override fun getCurrentContentTitle(player: Player): CharSequence ="JESUS IS LORD RADIO"
+       /* player.mediaMetadata.albumTitle ?: "JESUS IS LORD RADIO"*/
 
     override fun createCurrentContentIntent(player: Player): PendingIntent? = pendingIntent
 
     override fun getCurrentContentText(player: Player): CharSequence =
-        player.mediaMetadata.displayTitle ?: "Unknown"
+        player.mediaMetadata.displayTitle ?: "Live Streaming"
 
     override fun getCurrentLargeIcon(
         player: Player,

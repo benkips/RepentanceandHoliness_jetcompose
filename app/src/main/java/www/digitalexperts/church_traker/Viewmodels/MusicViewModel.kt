@@ -18,8 +18,11 @@ class MusicViewModel  @Inject constructor(
 ) : ViewModel() {
     var isMusicPlaying by savedStateHandle.saveable { mutableStateOf(false) }
     fun setMusicItems() {
-        val MEDIA_URL = "https://traffic.libsyn.com/secure/adbackstage/ADB162-1.5.mp3?dest-id=2710847"
+        val MEDIA_URL = "http://node-15.zeno.fm/gmdx1sb97f8uv?rj-ttl=5&rj-tok=AAABfccRdpIA8mopC5CghSrEoA"
         val mediaItem = MediaItem.fromUri(MEDIA_URL)
         musicServiceHandler.setMediaItem(mediaItem)
+        musicServiceHandler.playPauseMusic()
+        isMusicPlaying=true
+
     }
 }
