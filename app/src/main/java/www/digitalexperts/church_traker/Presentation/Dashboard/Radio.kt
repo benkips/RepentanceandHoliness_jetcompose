@@ -1,16 +1,6 @@
 package www.digitalexperts.church_traker.Presentation.Dashboard
 
-import android.app.Activity
-import android.content.ComponentName
-import android.content.Context
-import android.content.ServiceConnection
-import android.os.IBinder
-import android.util.Log
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -36,6 +26,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,67 +42,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.media3.common.MediaItem
-import androidx.media3.common.MediaMetadata
-import androidx.media3.common.Player
 import www.digitalexperts.church_traker.R
-import www.digitalexperts.church_traker.BackgroundServices.BackgroundPlayService
-import www.digitalexperts.church_traker.BackgroundServices.MediaObject
-import www.digitalexperts.church_traker.BackgroundServices.MusicServiceHandler
-import www.digitalexperts.church_traker.BackgroundServices.PlayerService
-import www.digitalexperts.church_traker.Viewmodels.Churchviewmodel
 import www.digitalexperts.church_traker.Viewmodels.MusicViewModel
 
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
-lateinit var backgroundPlayService: BackgroundPlayService
-var player: Player? = null
-lateinit var mediaObj: MediaObject
+
 val TAG = "MainScreen"
 private const val MEDIA_URL = "https://traffic.libsyn.com/secure/adbackstage/ADB162-1.5.mp3?dest-id=2710847"
 
- /*var connection = object : ServiceConnection {
-    val contexts =  LocalContext
-
-    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-        Log.d(TAG, "onServiceConnected()")
-
-        if (service is BackgroundPlayService.BackgroundServiceBinder){
-             service.getService()
-             service.getExoplayer()
-        }
-    }
-
-    override fun onServiceDisconnected(name: ComponentName?) {
-        Log.d(TAG, "onServiceDisconnected()")
-        Log.d(TAG, "unBindService()")
-        backgroundPlayService.stopSelf()
-        (contexts as Activity).applicationContext!!.unbindService(this)
-    }
-
-
-}*/
-
-
-/*private val playerServiceConnection = object : ServiceConnection {
-    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-        val binder = service as PlayerService.ServiceBinder
-        player = binder.getPlayerService().player!!
-        player?.prepare()
-        player?.playWhenReady = false
-        player?.seekTo(0, 0)
-        val mediaItem = MediaItem.fromUri(MEDIA_URL)
-
-        player?.setMediaItem(mediaItem)
-        player?.prepare()
-        player?.play()
-    }
-
-    override fun onServiceDisconnected(name: ComponentName?) {
-        TODO("Not yet implemented")
-    }
-}*/
 
 
 
@@ -183,6 +124,7 @@ fun PlayerButtons(
 ) {
     val context=LocalContext.current
     var isMusicPlaying= viewModel.isMusicPlaying
+    val audioFlag = remember { mutableStateOf(true) }
     val playerButtonSize: Dp = 72.dp
     val sideButtonSize: Dp = 42.dp
 
@@ -191,42 +133,50 @@ fun PlayerButtons(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        val buttonModifier = modifier
+        val refreshModifier = modifier
             .size(sideButtonSize)
             .semantics { role = Role.Button }
-        val midlebtnModifier = modifier
-            .size(playerButtonSize)
-            .semantics { role = Role.Button }
             .clickable {
-
-                viewModel.setMusicItems()
-                isMusicPlaying=viewModel.isMusicPlaying
-                Toast
-                    .makeText(context, isMusicPlaying.toString(), Toast.LENGTH_SHORT)
-                    .show()
-                isMusicPlaying=false
-                /*initService(LocalContext.current)*/
-                /* if (audioFlag.value) {
-                    audioFlag.value = false
-                } else {
-                    audioFlag.value = true
-                }*/
-                /* Log.d(TAG, "initService()")
-                val intent = Intent((context as Activity).applicationContext!!, PlayerService::class.java)
-                context.applicationContext!!.bindService(intent, playerServiceConnection, Context.BIND_AUTO_CREATE)*/
+                val url = "https://s3.radio.co/s97f38db97/listen"
+                viewModel.setMusicItems(url)
             }
 
+       val stopbtnModifier = modifier
+                .size(sideButtonSize)
+                .semantics { role = Role.Button }
+                .clickable {
+                    viewModel.stopMusic()
+                }
+
+        val midlebtnModifier = modifier
+                .size(playerButtonSize)
+                .semantics { role = Role.Button }
+                .clickable {
+                    if (audioFlag.value) {
+                        val url = "https://s3.radio.co/s97f38db97/listen"
+                        viewModel.setMusicItems(MEDIA_URL)
+                        audioFlag.value = false
+
+                    } else {
+                        viewModel.pauseMusic()
+                        audioFlag.value = true
+                    }
+                    Toast
+                        .makeText(context,  audioFlag.value.toString() , Toast.LENGTH_SHORT)
+                        .show()
+                }
+
         Icon(
-            painter = painterResource(R.drawable.ic_baseline_skip_next_24),
+            painter = painterResource(R.drawable.baseline_refresh_24),
             contentDescription = "Skip Icon",
-            modifier = buttonModifier,
+            modifier = refreshModifier,
             tint = Color.Black
         )
 
 
         Icon(
-            painter =   painterResource( if (isMusicPlaying) R.drawable.ic_baseline_play_arrow_24
-            else R.drawable.ic_baseline_pause_24),
+            painter =   painterResource( if (audioFlag.value) R.drawable.ic_baseline_play_arrow_24
+            else R.drawable.ic_baseline_pause_24 ),
             contentDescription = "Play / Pause Icon",
             tint = Color.Black,
             modifier = midlebtnModifier,
@@ -234,10 +184,10 @@ fun PlayerButtons(
 
 
         Icon(
-            painter = painterResource(R.drawable.ic_baseline_skip_previous_24),
-            contentDescription = "Replay 10 min",
-            modifier = buttonModifier,
-            tint = Color.Black
+            painter = painterResource(R.drawable.baseline_stop_24),
+            contentDescription = "stopButton",
+            tint = Color.Black,
+            modifier = stopbtnModifier
         )
 
 
@@ -263,10 +213,12 @@ fun Otherbtns() {
                 disabledElevation = 0.dp
             ),
             modifier = Modifier.fillMaxWidth(0.7f),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0f82d2))
         ) {
             Text(
                 text = "Other radio links",
-                modifier = Modifier.padding(6.dp)
+                modifier = Modifier.padding(6.dp),
+                color= Color.White,
             )
 
         }
@@ -275,6 +227,7 @@ fun Otherbtns() {
             onClick = { /* navController.navigate("webviews/$alltime")*/},
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier.fillMaxWidth(1f),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0f82d2))
         ) {
             Text(
                 text = "24/7 Endtime-Messages",

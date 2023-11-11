@@ -55,7 +55,7 @@ fun MainDashboard(navController: NavController, viewModel: Churchviewmodel) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colorResource(id = R.color.cultured))
+                 /*   .background(colorResource(id = R.color.cultured))*/
             ) {
                 Column {
                     /*UserWelcomeStatement()
@@ -101,7 +101,8 @@ fun SearchSection(viewModel: Churchviewmodel) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(color = colorResource(id = R.color.cultured), shape = RoundedCornerShape(16.dp))
+                        .background(color = colorResource(id = R.color.cultured),
+                            shape = RoundedCornerShape(16.dp))
                         .border(
                             width = 2.dp,
                             color = colorResource(id = R.color.gray),
@@ -204,7 +205,7 @@ fun ChurchList(churches: ArrayList<ChurchesItem>,navController: NavController,vi
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.cultured))
+            /*.background(colorResource(id = R.color.cultured))*/
     ) {
         LazyColumn(
             Modifier.padding(10.dp)

@@ -17,12 +17,16 @@ class MusicViewModel  @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     var isMusicPlaying by savedStateHandle.saveable { mutableStateOf(false) }
-    fun setMusicItems() {
-        val MEDIA_URL = "http://node-15.zeno.fm/gmdx1sb97f8uv?rj-ttl=5&rj-tok=AAABfccRdpIA8mopC5CghSrEoA"
-        val mediaItem = MediaItem.fromUri(MEDIA_URL)
+    fun setMusicItems(url:String) {
+        val mediaItem = MediaItem.fromUri(url)
         musicServiceHandler.setMediaItem(mediaItem)
         musicServiceHandler.playPauseMusic()
-        isMusicPlaying=true
+    }
 
+    fun stopMusic() {
+        musicServiceHandler.stopMusic()
+    }
+    fun pauseMusic() {
+        musicServiceHandler.pauseMusic()
     }
 }
