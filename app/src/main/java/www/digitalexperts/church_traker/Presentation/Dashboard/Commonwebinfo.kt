@@ -19,7 +19,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,20 +34,14 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import www.digitalexperts.church_traker.R
-import www.digitalexperts.church_traker.Viewmodels.Folderviewmodel
 
 @Composable
-fun Webinfo(viewModel: Folderviewmodel){
-    var toloadUrl:String=viewModel.foldername.collectAsState().value
-    var mystringUrls:String
+fun CommonWebinfo(urls:String){
+    var mystringUrls:String=urls
     val visibility = remember { mutableStateOf(false)}
 
-    Log.d("Webinfo", "Webinfo: " + toloadUrl)
-    if (toloadUrl.contains("Video"))
-        mystringUrls="https://repentanceandholinessinfo.com/videoteachings.php"
-    else {
-        mystringUrls="https://repentanceandholinessinfo.com/auditeachings.php"
-    }
+    Log.d("Webinfo", "Webinfo: " + mystringUrls)
+
 
     if (visibility.value){
         Dialog(

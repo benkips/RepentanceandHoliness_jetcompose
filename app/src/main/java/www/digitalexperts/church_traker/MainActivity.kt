@@ -90,7 +90,6 @@ class MainActivity : ComponentActivity() {
                 )
                 //creating state
                 val pms = rememberPermissionMateState(permissions = permission)
-
                 pms.start()
 
                 val items = listOf(
@@ -196,6 +195,8 @@ class MainActivity : ComponentActivity() {
                                                 navController.navigate(Constants.Screens.MAIN_SCREEN)
                                             }else if (bottomNavigationItem.title.equals("Teachings")){
                                                 navController.navigate(Constants.Screens.TEACHINGS_SCREEN)
+                                            }else if (bottomNavigationItem.title.equals("Pdf")){
+                                                navController.navigate(Constants.Screens.MAGAZINE_SCREEN)
                                             }else if (bottomNavigationItem.title.equals("Live Radio")){
                                                 navController.navigate(Constants.Screens.RADIO_SCREEN)
                                                 startMusicService()

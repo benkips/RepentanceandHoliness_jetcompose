@@ -2,4 +2,13 @@
     <string name="app_name">RepentanceandHoliness</string>
     <string name="channel_name">Jesus Is Lord Radio</string>
     <string name="channel_desc">Live now</string>
+
+
+    <string name="micAndCameraPermissionDialogTitle">App Would Like to Access the Camera and Microphone</string>
+    <string name="micAndCameraPermissionDialogBody">App needs the Microphone and Camera permissions in order to call.</string>
+    <string name="micAndCameraDeniedPermissionDialogTitle">App Would Like to Access the Camera and Microphone</string>
+    <string name="micAndCameraDeniedPermissionDialogBody">App needs the Microphone and Camera permissions in order to call, but they have been permanently denied. Please continue to app settings, select \"Permissions\", and enable \"Microphone\" and \"Camera\".</string>
+
+
+    <string name="micAndCameraGranted">Camera and Microphone are granted you can use them</string>
 </resources>

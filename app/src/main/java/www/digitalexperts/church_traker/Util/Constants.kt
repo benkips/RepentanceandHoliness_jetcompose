@@ -7,5 +7,7 @@ class Constants {
        const val TEACHINGS_SCREEN="teachings"
        const val WEBVIEW_SCREEN="wvinfo"
        const val RADIO_SCREEN="radio"
+       const val MAGAZINE_SCREEN="pdfs"
+       const val CONTENT_SCREEN="pdf_content"
     }
 }

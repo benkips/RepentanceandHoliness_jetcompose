@@ -42,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import www.digitalexperts.church_traker.R
 import www.digitalexperts.church_traker.Viewmodels.MusicViewModel
 
@@ -56,7 +57,7 @@ private const val MEDIA_URL = "https://traffic.libsyn.com/secure/adbackstage/ADB
 
 
 @Composable
-fun Radio(isMusicPlaying: Boolean,viewModel: MusicViewModel) {
+fun Radio(isMusicPlaying: Boolean,viewModel: MusicViewModel,navController: NavController) {
 
     Surface(
         modifier = Modifier
@@ -86,7 +87,7 @@ fun Radio(isMusicPlaying: Boolean,viewModel: MusicViewModel) {
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
                 PlayerButtons(modifier = Modifier.padding(vertical = 8.dp),viewModel)
-                Otherbtns()
+                Otherbtns(navController)
             }
 
 
@@ -154,7 +155,7 @@ fun PlayerButtons(
                 .clickable {
                     if (audioFlag.value) {
                         val url = "https://s3.radio.co/s97f38db97/listen"
-                        viewModel.setMusicItems(MEDIA_URL)
+                        viewModel.setMusicItems(url)
                         audioFlag.value = false
 
                     } else {
@@ -195,7 +196,7 @@ fun PlayerButtons(
 }
 
 @Composable
-fun Otherbtns() {
+fun Otherbtns(navController: NavController) {
     val allotherlinks=
         URLEncoder.encode("https://repentanceandholinessinfo.com/playradio.php", StandardCharsets.UTF_8.toString())
     val alltime= URLEncoder.encode("http://node-15.zeno.fm/gmdx1sb97f8uv?rj-ttl=5&rj-tok=AAABfccRdpIA8mopC5CghSrEoA", StandardCharsets.UTF_8.toString())
@@ -205,7 +206,7 @@ fun Otherbtns() {
     ) {
 
         Button(
-            onClick = { /*navController.navigate("webviews/$allotherlinks")*/ },
+            onClick = { navController.navigate("webviews/$allotherlinks") },
             shape = RoundedCornerShape(10.dp),
             elevation = ButtonDefaults.elevation(
                 defaultElevation = 6.dp,
@@ -224,10 +225,10 @@ fun Otherbtns() {
         }
         Spacer(modifier = Modifier.height(30.dp))
         Button(
-            onClick = { /* navController.navigate("webviews/$alltime")*/},
+            onClick = {  navController.navigate("webviews/$alltime")},
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier.fillMaxWidth(1f),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0f82d2))
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFD81B60))
         ) {
             Text(
                 text = "24/7 Endtime-Messages",

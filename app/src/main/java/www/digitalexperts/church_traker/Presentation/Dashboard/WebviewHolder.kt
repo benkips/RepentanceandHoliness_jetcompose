@@ -85,8 +85,9 @@ class WebviewHolder(context: Context) {
     private fun initWebview() {
         val webSettings = webview.settings
         webSettings.javaScriptEnabled = true
-        setupchromeclient()
         setupwebclient()
+        setupchromeclient()
+
     }
 
     private fun setupchromeclient() {

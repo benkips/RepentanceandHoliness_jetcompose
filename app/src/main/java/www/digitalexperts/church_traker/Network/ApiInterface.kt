@@ -18,12 +18,12 @@ interface ApiInterface {
     @POST("getfolders.php")
     @FormUrlEncoded
     suspend fun  getfolders(@Field("folder") q:String?): Folderz
-/*
+
     //geting contents
     @POST("folderitems.php")
     @FormUrlEncoded
     suspend fun  getpdfitems(@Field("table") x:String?,@Field("folder")q:String?):Pdfdata
-*/
+
     //getting pastors
     @POST("events.php")
     @FormUrlEncoded
