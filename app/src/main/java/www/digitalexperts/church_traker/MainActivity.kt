@@ -52,6 +52,7 @@ import com.farimarwat.permissionmate.PMate
 import com.farimarwat.permissionmate.rememberPermissionMateState
 import kotlinx.coroutines.launch
 import www.digitalexperts.church_traker.BackgroundServices.MediaService
+import www.digitalexperts.church_traker.Data.models.SideNavigationItem
 import www.digitalexperts.church_traker.Util.Constants
 
 
@@ -120,25 +121,99 @@ class MainActivity : ComponentActivity() {
 
                 )
 
+                val sidenavitems = listOf(
+                    SideNavigationItem(
+                        title = "Home",
+                        selectedIcon = Icons.Filled.Home,
+                        unselectedIcon = Icons.Outlined.Home,
+                        hasNews = false,
+                    ),
+                    SideNavigationItem(
+                        title = "JESUS IS LORD  Radio",
+                        selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_jslrd),
+                        unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_jslrd),
+                        hasNews = false,
+                    ),
+                    SideNavigationItem(
+                        title = "Visitations of the LORD",
+                        selectedIcon = ImageVector.vectorResource(id = R.drawable.baseline_bubble_chart_24),
+                        unselectedIcon = ImageVector.vectorResource(id = R.drawable.baseline_bubble_chart_24),
+                        hasNews = false,
+                    ),
+                    SideNavigationItem(
+                        title = "Prophecies and Fulfilments",
+                        selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_baseline_offline_bolt_24),
+                        unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_baseline_offline_bolt_24),
+                        hasNews = false,
+                    ),
+                    SideNavigationItem(
+                        title = "Healings of the LORD",
+                        selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_baseline_whatshot_24),
+                        unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_baseline_whatshot_24),
+                        hasNews = false,
+                    ),
+                    SideNavigationItem(
+                        title = "Twitter Conversations",
+                        selectedIcon = ImageVector.vectorResource(id = R.drawable.twitter),
+                        unselectedIcon = ImageVector.vectorResource(id = R.drawable.twitter),
+                        hasNews = false,
+                    ),
+                    SideNavigationItem(
+                        title = "Facebook",
+                        selectedIcon = ImageVector.vectorResource(id = R.drawable.baseline_add_to_home_screen_24),
+                        unselectedIcon = ImageVector.vectorResource(id = R.drawable.baseline_add_to_home_screen_24),
+                        hasNews = false,
+                    ),
+                    SideNavigationItem(
+                        title = "Instagram",
+                        selectedIcon = ImageVector.vectorResource(id = R.drawable.instagram),
+                        unselectedIcon = ImageVector.vectorResource(id = R.drawable.instagram),
+                        hasNews = false,
+                    ),
+                    SideNavigationItem(
+                        title = "Contacts",
+                        selectedIcon = ImageVector.vectorResource(id = R.drawable.ic_baseline_contact_support_24),
+                        unselectedIcon = ImageVector.vectorResource(id = R.drawable.ic_baseline_contact_support_24),
+                        hasNews = false,
+                    ),
+                    SideNavigationItem(
+                        title = "Share",
+                        selectedIcon = ImageVector.vectorResource(id = R.drawable.baseline_share_24),
+                        unselectedIcon = ImageVector.vectorResource(id = R.drawable.baseline_share_24),
+                        hasNews = false,
+                    )
+
+                )
+
                 ModalNavigationDrawer(
                     drawerContent = {
                         ModalDrawerSheet {
-                            items.forEachIndexed { index, bottomNavigationItem ->
+                            sidenavitems.forEachIndexed { index, sideNavigationItem ->
                                 NavigationDrawerItem(
-                                    label = { Text(text = bottomNavigationItem.title) },
+                                    label = { Text(text = sideNavigationItem.title) },
                                     selected = index == selectedItemIndex,
                                     onClick = {
                                         selectedItemIndex = index
                                         Scope.launch {
                                             drawerState.close()
                                         }
+                                        if(sideNavigationItem.title.equals("Home")){
+                                            navController.navigate(Constants.Screens.MAIN_SCREEN)
+                                        }else if (sideNavigationItem.title.equals("Teachings")){
+                                            navController.navigate(Constants.Screens.TEACHINGS_SCREEN)
+                                        }else if (sideNavigationItem.title.equals("Pdf")){
+                                            navController.navigate(Constants.Screens.MAGAZINE_SCREEN)
+                                        }else if (sideNavigationItem.title.equals("Live Radio")){
+                                            navController.navigate(Constants.Screens.RADIO_SCREEN)
+                                            startMusicService()
+                                        }
                                     },
                                     icon = {
                                         Icon(
                                             imageVector = if (index == selectedItemIndex) {
-                                                bottomNavigationItem.selectedIcon
-                                            } else bottomNavigationItem.unselectedIcon,
-                                            contentDescription = bottomNavigationItem.title
+                                                sideNavigationItem.selectedIcon
+                                            } else sideNavigationItem.unselectedIcon,
+                                            contentDescription = sideNavigationItem.title
                                         )
                                     })
                             }

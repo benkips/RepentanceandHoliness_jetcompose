@@ -1,7 +1,10 @@
 package www.digitalexperts.church_traker.Repo
 
 import android.util.Log
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import www.digitalexperts.church_traker.Network.ApiInterface
+import www.digitalexperts.church_traker.Paging.HealingPagSource
 import javax.inject.Inject
 
 class Repostuff @Inject constructor (private val apiInterface: ApiInterface):Baserepository(){
@@ -23,13 +26,13 @@ class Repostuff @Inject constructor (private val apiInterface: ApiInterface):Bas
 
     }
 
-/*    fun gethealingz() =
+    fun gethealingz() =
         Pager(
             config = PagingConfig(
                 pageSize = 10,
                 maxSize = 100,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = {HealingPagSource(apiInterface)}
-        ).liveData*/
+            pagingSourceFactory = { HealingPagSource(apiInterface) }
+        ).flow
 }

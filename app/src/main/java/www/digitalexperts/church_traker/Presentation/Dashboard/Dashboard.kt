@@ -167,7 +167,7 @@ fun UserWelcomeStatement() {
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = "Prepare The Way ,The messiah is coming",
+                text = "Prepare The Way ,The Messiah Is Coming",
                 color = colorResource(id = R.color.black),
                 fontSize = 26.sp,
                 fontWeight = FontWeight.SemiBold
@@ -197,7 +197,11 @@ fun ChurchesListing(viewModel: Churchviewmodel,navController: NavController) {
             }
 
             is Resource.Success -> {
-                ChurchList(it.value,navController,viewModel)
+                if(it.value[0].status == "none"){
+                    RetrySection(error = "Church or pastor not found", onRetry ={viewModel.search("nairobi")} )
+                }else {
+                    ChurchList(it.value, navController, viewModel)
+                }
             }
 
             else -> {
@@ -219,7 +223,7 @@ fun ChurchList(churches: ArrayList<ChurchesItem>,navController: NavController,vi
             Modifier.padding(10.dp)
         ) {
             item {  UserWelcomeStatement() }
-            item {   SearchSection(viewModel)}
+            item {  SearchSection(viewModel)}
             items(churches) {
                 ChurchItem(item = it,navController,viewModel)
             }

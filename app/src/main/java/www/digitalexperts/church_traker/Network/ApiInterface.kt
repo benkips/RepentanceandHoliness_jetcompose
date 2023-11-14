@@ -3,6 +3,7 @@ package www.digitalexperts.church_traker.Network
 import retrofit2.http.*
 import www.digitalexperts.church_traker.Data.models.*
 import www.digitalexperts.church_traker.models.Folderz
+import www.digitalexperts.church_traker.models.Heal
 import www.digitalexperts.church_traker.models.Pastors
 
 interface ApiInterface {
@@ -29,10 +30,10 @@ interface ApiInterface {
     @FormUrlEncoded
     suspend fun  getingpastors(@Field("cid") x:String?): Pastors
 
-/*    //getting healings
+  //getting healings
     @POST()
     @FormUrlEncoded
-    suspend fun  gethealings(@Url url : String,@Field("pg") x: Int?,@Field("count")q: Int?):Heal*/
+    suspend fun  gethealings(@Url url : String,@Field("pg") x: Int?,@Field("count")q: Int?): Heal
 
 
 }

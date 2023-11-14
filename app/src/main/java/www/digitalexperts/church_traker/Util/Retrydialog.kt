@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,6 +32,7 @@ fun RetrySection(
             Text(error, color = Color.Red, fontSize = 18.sp)
             Spacer(modifier = Modifier.height(8.dp))
             Button(
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFD81B60)),
                 onClick = { onRetry() },
                 modifier = Modifier.align(CenterHorizontally)
             ) {
