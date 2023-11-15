@@ -25,13 +25,13 @@ import androidx.compose.ui.unit.sp
 import www.digitalexperts.church_traker.models.Healings
 
 @Composable
-fun VideoCard(isCurrentPlaying: Boolean, Healings: Healings, onClick: () -> Unit) {
+fun VideoCard( Healings: Healings, onClick: () -> Unit) {
 
-    val color = if (isCurrentPlaying) {
+   /* val color = if (isCurrentPlaying) {
         MaterialTheme.colorScheme.surfaceVariant
     } else {
         Color.White
-    }
+    }*/
 
     Card(
         modifier = Modifier
@@ -39,7 +39,7 @@ fun VideoCard(isCurrentPlaying: Boolean, Healings: Healings, onClick: () -> Unit
             .fillMaxWidth(),
 
         elevation = CardDefaults.cardElevation(5.dp),
-        colors = CardDefaults.cardColors(containerColor = color)
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Row(
             Modifier
@@ -62,7 +62,7 @@ fun VideoCard(isCurrentPlaying: Boolean, Healings: Healings, onClick: () -> Unit
                 )
             }
 
-            if (isCurrentPlaying) {
+     /*       if (isCurrentPlaying) {
                 Column(Modifier.weight(3f)) {
                     Text(
                         text = "Now Playing...",
@@ -74,7 +74,7 @@ fun VideoCard(isCurrentPlaying: Boolean, Healings: Healings, onClick: () -> Unit
                             .padding(8.dp),
                     )
                 }
-            }
+            }*/
         }
     }
 }

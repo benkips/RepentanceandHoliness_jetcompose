@@ -1,6 +1,7 @@
 package www.digitalexperts.church_traker.Presentation.Dashboard
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
@@ -33,22 +33,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.media3.common.Player
 import androidx.media3.ui.PlayerView
 import androidx.navigation.NavController
 import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import www.digitalexperts.church_traker.Viewmodels.Healingviewmodel
-import www.digitalexperts.church_traker.models.Healings
+import androidx.paging.compose.itemsIndexed
+import www.digitalexperts.church_traker.Presentation.Videoscreen.VideoCard
 
 @Composable
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 fun Healingviews(navController: NavController, viewModel: Healingviewmodel) {
     val healingvideos = viewModel.Healed.collectAsLazyPagingItems()
-
     val listener = object : Player.Listener {
         override fun onIsPlayingChanged(isPlaying: Boolean) {
             super.onIsPlayingChanged(isPlaying)
@@ -186,58 +186,41 @@ fun Healingviews(navController: NavController, viewModel: Healingviewmodel) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // video playlist
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            items(videos) { item ->
-                VideoCard(
-                    isCurrentPlaying = viewModel.currentVideo.value == item,
-                    videoItem = item,
-                    onClick = { viewModel.playVideo(item.contentUri) },
-                )
-            }
-        }
-
-    }
-
-}
-
-@Composable
-fun HealingScreen(thehealed: LazyPagingItems<Healings>, modifier: Modifier = Modifier) {
-    when (thehealed.loadState.refresh) {
-        LoadState.Loading -> {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-        is LoadState.Error -> {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = "Ooops something went wrong")
-            }
-        }
-        else -> {
-            LazyColumn(modifier = modifier) {
-                itemsIndexed(thehealed) { index, item ->
-                    item?.let {
-                        BookItem(
-                            book = item,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(getBackgroundForIndex(index))
-                                .padding(vertical = 15.dp)
-                        )
-                    }
+        when (healingvideos.loadState.refresh) {
+            LoadState.Loading -> {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator()
                 }
             }
+            is LoadState.Error -> {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "Ooops something went wrong")
+                }
+            }
+            else -> {
+                LazyColumn() {
+                    itemsIndexed(healingvideos) { index, item ->
+                        item?.let {
+                            VideoCard(
+
+                            Healings = item,
+                            onClick = { viewModel.playVideo(item.vidlink.toUri()) })
+                        }
+                    }
+                }
+
+            }
         }
+
+
     }
+
 }

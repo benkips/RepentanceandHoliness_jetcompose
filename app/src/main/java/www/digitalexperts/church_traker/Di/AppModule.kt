@@ -78,14 +78,6 @@ object AppModule {
     ): MusicServiceHandler =MusicServiceHandler(exoPlayer)
 
 
-    @Provides
-    @ViewModelScoped
-    fun provideVideoPlayer(@ApplicationContext context: Context): Player {
-        return ExoPlayer.Builder(context)
-            .build()
-    }
-
-
 
 
 

@@ -84,7 +84,7 @@ fun SetupNavHost(navController: NavHostController) {
             Content(navController =navController , viewModel =contentviewmodel, viewModel2 = pdfviewmodel)
         }
 
-        composable(route =Screens.Contentscreen.routes ){ backStackEntry ->
+        composable(route =Screens.Healingscreen.routes ){ backStackEntry ->
 
             Healingviews(navController =navController , viewModel =healingviewmodel)
         }

@@ -197,15 +197,8 @@ class MainActivity : ComponentActivity() {
                                         Scope.launch {
                                             drawerState.close()
                                         }
-                                        if(sideNavigationItem.title.equals("Home")){
-                                            navController.navigate(Constants.Screens.MAIN_SCREEN)
-                                        }else if (sideNavigationItem.title.equals("Teachings")){
-                                            navController.navigate(Constants.Screens.TEACHINGS_SCREEN)
-                                        }else if (sideNavigationItem.title.equals("Pdf")){
-                                            navController.navigate(Constants.Screens.MAGAZINE_SCREEN)
-                                        }else if (sideNavigationItem.title.equals("Live Radio")){
-                                            navController.navigate(Constants.Screens.RADIO_SCREEN)
-                                            startMusicService()
+                                        if (sideNavigationItem.title.equals("Healings of the LORD")){
+                                            navController.navigate(Constants.Screens.HEALING_SCREEN)
                                         }
                                     },
                                     icon = {
