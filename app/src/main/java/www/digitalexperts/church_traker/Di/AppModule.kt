@@ -1,7 +1,7 @@
 package www.digitalexperts.church_traker.Di
 
 import android.content.Context
-import androidx.media3.common.AudioAttributes
+import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
@@ -10,6 +10,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -77,7 +78,12 @@ object AppModule {
     ): MusicServiceHandler =MusicServiceHandler(exoPlayer)
 
 
-
+    @Provides
+    @ViewModelScoped
+    fun provideVideoPlayer(@ApplicationContext context: Context): Player {
+        return ExoPlayer.Builder(context)
+            .build()
+    }
 
 
 

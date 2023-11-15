@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import www.digitalexperts.church_traker.Presentation.Dashboard.ChurchDetailScreen
 import www.digitalexperts.church_traker.Presentation.Dashboard.CommonWebinfo
 import www.digitalexperts.church_traker.Presentation.Dashboard.Content
+import www.digitalexperts.church_traker.Presentation.Dashboard.Healingviews
 import www.digitalexperts.church_traker.Presentation.Dashboard.MainDashboard
 import www.digitalexperts.church_traker.Presentation.Dashboard.Pdfteachings
 import www.digitalexperts.church_traker.Presentation.Dashboard.Pdfview
@@ -20,6 +21,7 @@ import www.digitalexperts.church_traker.Util.Constants
 import www.digitalexperts.church_traker.Viewmodels.Churchviewmodel
 import www.digitalexperts.church_traker.Viewmodels.Contentviewmodel
 import www.digitalexperts.church_traker.Viewmodels.Folderviewmodel
+import www.digitalexperts.church_traker.Viewmodels.Healingviewmodel
 import www.digitalexperts.church_traker.Viewmodels.MusicViewModel
 import www.digitalexperts.church_traker.Viewmodels.Pastorsviewmodel
 import www.digitalexperts.church_traker.Viewmodels.Pdfviewmodel
@@ -32,6 +34,7 @@ sealed class  Screens(val routes:String){
     object  Radio:Screens(routes = Constants.Screens.RADIO_SCREEN)
     object  Pdfteaching:Screens(routes = Constants.Screens.MAGAZINE_SCREEN)
     object Contentscreen:Screens(routes = Constants.Screens.CONTENT_SCREEN)
+    object Healingscreen:Screens(routes = Constants.Screens.HEALING_SCREEN)
 }
 
 
@@ -44,6 +47,7 @@ fun SetupNavHost(navController: NavHostController) {
     val musicViewModel= hiltViewModel<MusicViewModel>()
     val pdfviewmodel= hiltViewModel<Pdfviewmodel>()
     val contentviewmodel= hiltViewModel<Contentviewmodel>()
+    val healingviewmodel= hiltViewModel<Healingviewmodel>()
 
     NavHost(navController =navController,
        startDestination = Screens.Main.routes){
@@ -78,6 +82,11 @@ fun SetupNavHost(navController: NavHostController) {
         composable(route =Screens.Contentscreen.routes ){ backStackEntry ->
 
             Content(navController =navController , viewModel =contentviewmodel, viewModel2 = pdfviewmodel)
+        }
+
+        composable(route =Screens.Contentscreen.routes ){ backStackEntry ->
+
+            Healingviews(navController =navController , viewModel =healingviewmodel)
         }
         composable(
             "webviews/{urls}",

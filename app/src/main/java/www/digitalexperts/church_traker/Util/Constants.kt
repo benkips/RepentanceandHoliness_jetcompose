@@ -9,5 +9,6 @@ class Constants {
        const val RADIO_SCREEN="radio"
        const val MAGAZINE_SCREEN="pdfs"
        const val CONTENT_SCREEN="pdf_content"
+       const val HEALING_SCREEN="healing_screen"
     }
 }
