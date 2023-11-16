@@ -35,7 +35,7 @@ fun VideoCard( Healings: Healings, onClick: () -> Unit) {
 
     Card(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(4.dp)
             .fillMaxWidth(),
 
         elevation = CardDefaults.cardElevation(5.dp),
@@ -52,7 +52,7 @@ fun VideoCard( Healings: Healings, onClick: () -> Unit) {
                     .padding(horizontal = 14.dp)
                     .weight(7f)
             ) {
-                Text(Healings.video, fontWeight = FontWeight.SemiBold, fontSize = 17.sp)
+                Text(Healings.title, fontWeight = FontWeight.SemiBold, fontSize = 17.sp)
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     "Cool Description",

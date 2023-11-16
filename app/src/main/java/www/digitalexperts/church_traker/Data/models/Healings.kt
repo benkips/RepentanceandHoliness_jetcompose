@@ -4,5 +4,6 @@ data class Healings (
     val message: String,
     val video: String,
     val vidlink: String,
+    val title: String,
     val time: String
         )
