@@ -23,6 +23,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,8 +53,12 @@ import www.digitalexperts.church_traker.Viewmodels.Churchviewmodel
 @Composable
 fun MainDashboard(navController: NavController, viewModel: Churchviewmodel) {
 
-    viewModel.search("nairobi")
+    //viewModel.search("nairobi")
     val viewAllchurchesList = viewModel.result.observeAsState()
+
+    LaunchedEffect(key1 = viewModel.id.collectAsState()) {
+        viewModel.search("nairobi")
+    }
     Log.d("MainDashboard", "MainDashboard: " + viewAllchurchesList)
     Surface(
         modifier = Modifier.fillMaxSize()

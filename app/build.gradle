@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "www.digitalexperts.church_traker"
-        minSdk 21
+        minSdk 24
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -101,6 +101,9 @@ dependencies {
     implementation "androidx.media3:media3-ui:1.2.0-rc01"
     implementation "androidx.media3:media3-common:1.2.0-rc01"
     implementation "androidx.media3:media3-session:1.2.0-rc01"
+    implementation "androidx.media3:media3-exoplayer-dash:1.2.0-rc01"
+    implementation 'io.sanghun:compose-video:1.2.0'
+
 
 
     implementation 'io.github.farimarwat:permissionmate-compose:1.1'
