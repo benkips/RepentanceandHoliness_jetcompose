@@ -43,7 +43,6 @@ import androidx.navigation.compose.rememberNavController
 import com.farimarwat.permissionmate.PMate
 import com.farimarwat.permissionmate.rememberPermissionMateState
 import dagger.hilt.android.AndroidEntryPoint
-import io.sanghun.compose.video.cache.VideoPlayerCacheManager
 import kotlinx.coroutines.launch
 import www.digitalexperts.church_traker.BackgroundServices.MediaService
 import www.digitalexperts.church_traker.Data.models.BottomNavigationItem
@@ -62,7 +61,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        VideoPlayerCacheManager.initialize(this.applicationContext, 1024 * 1024 * 1024)
         setContent {
             RepentanceandHolinessTheme {
                 // A surface container using the 'background' color from the theme
