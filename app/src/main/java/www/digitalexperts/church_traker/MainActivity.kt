@@ -70,6 +70,7 @@ class MainActivity : ComponentActivity() {
                 }
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val Scope = rememberCoroutineScope()
+                var weblink=""
 
 
                 //creating list
@@ -193,9 +194,43 @@ class MainActivity : ComponentActivity() {
                                         Scope.launch {
                                             drawerState.close()
                                         }
+
                                         if (sideNavigationItem.title.equals("Healings of the LORD")){
                                             navController.navigate(Constants.Screens.HEALING_SCREEN)
+                                             /*val intent = Intent(this@MainActivity, VideoActivity::class.java)
+                                             //intent.putExtra("Vid", healing.video)
+                                            this@MainActivity.startActivity(intent)*/
+                                        }else if (sideNavigationItem.title.equals("JESUS IS LORD  Radio")){
+                                            navController.navigate(Constants.Screens.RADIO_SCREEN)
+                                        }else if (sideNavigationItem.title.equals("Visitations of the LORD")){
+                                             weblink = "https://repentanceandholinessinfo.com/visitations.php"
+                                            navController.navigate("webviews/$weblink")
+                                        }else if (sideNavigationItem.title.equals("Prophecies and Fulfilments")){
+                                            weblink = "https://repentanceandholinessinfo.com/prophecies.php"
+                                            navController.navigate("webviews/$weblink")
+                                        }else if (sideNavigationItem.title.equals("Twitter Conversations")){
+                                             weblink = "https://repentanceandholinessinfo.com/twitter.php"
+                                            navController.navigate("webviews/$weblink")
+                                        }else if (sideNavigationItem.title.equals("Facebook")){
+                                            weblink = "https://web.facebook.com/jesusiscomingofficial/?_rdc=1&_rdr"
+                                            navController.navigate("webviews/$weblink")
+                                        }else if (sideNavigationItem.title.equals("Instagram")){
+                                            val weblink = "https://www.instagram.com/jesusiscoming_2/"
+                                            navController.navigate("webviews/$weblink")
+                                        }else if (sideNavigationItem.title.equals("Contacts")){
+                                            navController.navigate("webviews/$weblink")
+                                        }else if (sideNavigationItem.title.equals("Share")){
+                                            val sendIntent = Intent()
+                                            sendIntent.action = Intent.ACTION_SEND
+                                            sendIntent.putExtra(
+                                                Intent.EXTRA_TEXT,
+                                                "Repentance and Holiness android app on playstore\n https://play.google.com/store/apps/details?id=www.digitalexperts.church_traker&hl=en"
+                                            )
+                                            sendIntent.type = "text/plain"
+                                            startActivity(sendIntent)
                                         }
+
+
                                     },
                                     icon = {
                                         Icon(

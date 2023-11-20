@@ -105,7 +105,6 @@ dependencies {
     implementation "androidx.media3:media3-common:1.2.0-rc01"
     implementation "androidx.media3:media3-session:1.2.0-rc01"
     implementation "androidx.media3:media3-exoplayer-dash:1.2.0-rc01"
-    implementation 'io.sanghun:compose-video:1.2.0'
 
 
 

@@ -2,22 +2,19 @@ package www.digitalexperts.church_traker.Presentation.Dashboard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import www.digitalexperts.church_traker.Presentation.Videoscreen.VideoCard
+import www.digitalexperts.church_traker.MainActivity
+import www.digitalexperts.church_traker.Presentation.Videoscreen.ShortViewCompose
 import www.digitalexperts.church_traker.Viewmodels.Healingviewmodel
 import www.digitalexperts.church_traker.models.Healings
 
@@ -26,11 +23,19 @@ import www.digitalexperts.church_traker.models.Healings
 fun Healingviews(navController: NavController, viewModel: Healingviewmodel) {
 
     val healingvideos = viewModel.Healed.collectAsLazyPagingItems()
+    val handlePagingResult = handlePagingResult(healingvideos)
+    val activity = LocalContext.current as MainActivity
+    if (handlePagingResult) {
+        ShortViewCompose(
+            activity =  activity,
+            videoItemsUrl = healingvideos,
+            clickItemPosition = 0
+        )
+    }
 
 
 
-
-    Column(
+    /*Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
@@ -46,10 +51,10 @@ fun Healingviews(navController: NavController, viewModel: Healingviewmodel) {
 
         HealingsList(healingvideos, navController = navController)
 
-    }
+    }*/
 
 }
-@Composable
+/*@Composable
 fun HealingsList(
     Healings: LazyPagingItems<Healings>,
    navController: NavController
@@ -73,7 +78,7 @@ fun HealingsList(
             }
         }
     }
-}
+}*/
 
 @Composable
 fun handlePagingResult(articles: LazyPagingItems<Healings>): Boolean {
@@ -87,13 +92,13 @@ fun handlePagingResult(articles: LazyPagingItems<Healings>): Boolean {
 
     return when {
         loadState.refresh is LoadState.Loading -> {
-            /*Column(
+            Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CircularProgressIndicator()
-            }*/
+            }
             false
         }
 

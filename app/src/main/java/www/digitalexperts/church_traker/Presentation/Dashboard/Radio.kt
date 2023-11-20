@@ -87,7 +87,7 @@ fun Radio(isMusicPlaying: Boolean,viewModel: MusicViewModel,navController: NavCo
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
                 PlayerButtons(modifier = Modifier.padding(vertical = 8.dp),viewModel)
-                Otherbtns(navController)
+                Otherbtns(navController,viewModel)
             }
 
 
@@ -126,6 +126,7 @@ fun PlayerButtons(
     val context=LocalContext.current
     var isMusicPlaying= viewModel.isMusicPlaying
     val audioFlag = remember { mutableStateOf(true) }
+    var status:String
     val playerButtonSize: Dp = 72.dp
     val sideButtonSize: Dp = 42.dp
 
@@ -140,6 +141,10 @@ fun PlayerButtons(
             .clickable {
                 val url = "https://s3.radio.co/s97f38db97/listen"
                 viewModel.setMusicItems(url)
+                status="Refreshing..."
+                Toast
+                    .makeText(context, status , Toast.LENGTH_SHORT)
+                    .show()
             }
 
        val stopbtnModifier = modifier
@@ -147,6 +152,10 @@ fun PlayerButtons(
                 .semantics { role = Role.Button }
                 .clickable {
                     viewModel.stopMusic()
+                    status="Radio Stopped..."
+                    Toast
+                        .makeText(context, status , Toast.LENGTH_SHORT)
+                        .show()
                 }
 
         val midlebtnModifier = modifier
@@ -157,13 +166,15 @@ fun PlayerButtons(
                         val url = "https://s3.radio.co/s97f38db97/listen"
                         viewModel.setMusicItems(url)
                         audioFlag.value = false
+                        status="Playing....Tune up the Volume"
 
                     } else {
                         viewModel.pauseMusic()
                         audioFlag.value = true
+                        status="Pausing..."
                     }
                     Toast
-                        .makeText(context,  audioFlag.value.toString() , Toast.LENGTH_SHORT)
+                        .makeText(context,  status , Toast.LENGTH_SHORT)
                         .show()
                 }
 
@@ -196,7 +207,7 @@ fun PlayerButtons(
 }
 
 @Composable
-fun Otherbtns(navController: NavController) {
+fun Otherbtns(navController: NavController,viewModel: MusicViewModel) {
     val allotherlinks=
         URLEncoder.encode("https://repentanceandholinessinfo.com/playradio.php", StandardCharsets.UTF_8.toString())
     val alltime= URLEncoder.encode("http://node-15.zeno.fm/gmdx1sb97f8uv?rj-ttl=5&rj-tok=AAABfccRdpIA8mopC5CghSrEoA", StandardCharsets.UTF_8.toString())
@@ -225,7 +236,10 @@ fun Otherbtns(navController: NavController) {
         }
         Spacer(modifier = Modifier.height(30.dp))
         Button(
-            onClick = {  navController.navigate("webviews/$alltime")},
+            onClick = {
+                viewModel.pauseMusic()
+                navController.navigate("webviews/$alltime")
+                      },
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier.fillMaxWidth(1f),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFD81B60))

@@ -17,7 +17,6 @@ import www.digitalexperts.church_traker.Presentation.Dashboard.Pdfview
 import www.digitalexperts.church_traker.Presentation.Dashboard.Radio
 import www.digitalexperts.church_traker.Presentation.Dashboard.Teachings
 import www.digitalexperts.church_traker.Presentation.Dashboard.Webinfo
-import www.digitalexperts.church_traker.Presentation.Videoscreen.Videoscreen
 import www.digitalexperts.church_traker.Util.Constants
 import www.digitalexperts.church_traker.Viewmodels.Churchviewmodel
 import www.digitalexperts.church_traker.Viewmodels.Contentviewmodel
@@ -116,19 +115,7 @@ fun SetupNavHost(navController: NavHostController) {
                 Pdfview(document)
             }
         }
-        composable(
-            "videoview/{vid}",
-            arguments = listOf(
-                navArgument("vid") {
-                    type = NavType.StringType
-                }
-            ),
-        ){
-                navBackStackEntry ->
-            navBackStackEntry.arguments?.getString("vid")?.let { vid ->
-                Videoscreen(vid)
-            }
-        }
+    
     }
 
 }

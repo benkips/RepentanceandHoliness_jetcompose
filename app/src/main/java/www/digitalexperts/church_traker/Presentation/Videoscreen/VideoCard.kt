@@ -1,6 +1,5 @@
 package www.digitalexperts.church_traker.Presentation.Videoscreen
 
-import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -47,10 +46,10 @@ fun VideoCard( healing: Healings,navController:NavController) {
                 .padding(horizontal = 8.dp, vertical = 8.dp)
                 .clickable {
                     Log.d("healing.vidlink", "healing.vidlink: " + healing.video)
-                   //navController.navigate( "videoview/${healing.video}")
-                    val intent = Intent(context, SecondvidActivity::class.java)
-                    intent.putExtra("Vid", healing.video)
-                    context.startActivity(intent)
+                    /*navController.navigate( "videoview/${healing.video}")
+                     val intent = Intent(context, SecondvidActivity::class.java)
+                     intent.putExtra("Vid", healing.video)
+                     context.startActivity(intent)*/
                 },
             verticalAlignment = Alignment.CenterVertically
         ) {
