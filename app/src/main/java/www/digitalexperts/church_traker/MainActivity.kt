@@ -50,6 +50,8 @@ import www.digitalexperts.church_traker.Data.models.SideNavigationItem
 import www.digitalexperts.church_traker.Navigation.SetupNavHost
 import www.digitalexperts.church_traker.Util.Constants
 import www.digitalexperts.church_traker.ui.theme.RepentanceandHolinessTheme
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 
 @AndroidEntryPoint
@@ -195,27 +197,31 @@ class MainActivity : ComponentActivity() {
                                             drawerState.close()
                                         }
 
-                                        if (sideNavigationItem.title.equals("Healings of the LORD")){
+                                        if (sideNavigationItem.title.equals("Home")){
+                                            navController.navigate(Constants.Screens.MAIN_SCREEN)
+                                        }else if (sideNavigationItem.title.equals("Healings of the LORD")){
                                             navController.navigate(Constants.Screens.HEALING_SCREEN)
-                                             /*val intent = Intent(this@MainActivity, VideoActivity::class.java)
-                                             //intent.putExtra("Vid", healing.video)
-                                            this@MainActivity.startActivity(intent)*/
                                         }else if (sideNavigationItem.title.equals("JESUS IS LORD  Radio")){
                                             navController.navigate(Constants.Screens.RADIO_SCREEN)
                                         }else if (sideNavigationItem.title.equals("Visitations of the LORD")){
-                                             weblink = "https://repentanceandholinessinfo.com/visitations.php"
+                                            weblink = "https://repentanceandholinessinfo.com/visitations.php"
+                                            weblink= URLEncoder.encode(weblink, StandardCharsets.UTF_8.toString())
                                             navController.navigate("webviews/$weblink")
                                         }else if (sideNavigationItem.title.equals("Prophecies and Fulfilments")){
                                             weblink = "https://repentanceandholinessinfo.com/prophecies.php"
+                                            weblink= URLEncoder.encode(weblink, StandardCharsets.UTF_8.toString())
                                             navController.navigate("webviews/$weblink")
                                         }else if (sideNavigationItem.title.equals("Twitter Conversations")){
-                                             weblink = "https://repentanceandholinessinfo.com/twitter.php"
+                                            weblink = "https://repentanceandholinessinfo.com/twitter.php"
+                                            weblink= URLEncoder.encode(weblink, StandardCharsets.UTF_8.toString())
                                             navController.navigate("webviews/$weblink")
                                         }else if (sideNavigationItem.title.equals("Facebook")){
                                             weblink = "https://web.facebook.com/jesusiscomingofficial/?_rdc=1&_rdr"
+                                            weblink= URLEncoder.encode(weblink, StandardCharsets.UTF_8.toString())
                                             navController.navigate("webviews/$weblink")
                                         }else if (sideNavigationItem.title.equals("Instagram")){
-                                            val weblink = "https://www.instagram.com/jesusiscoming_2/"
+                                            weblink = "https://www.instagram.com/jesusiscoming_2/"
+                                            weblink= URLEncoder.encode(weblink, StandardCharsets.UTF_8.toString())
                                             navController.navigate("webviews/$weblink")
                                         }else if (sideNavigationItem.title.equals("Contacts")){
                                             navController.navigate("webviews/$weblink")

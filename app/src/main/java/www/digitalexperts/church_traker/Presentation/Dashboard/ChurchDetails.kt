@@ -1,5 +1,7 @@
 package www.digitalexperts.church_traker.Presentation.Dashboard
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -9,11 +11,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -93,7 +97,7 @@ fun ChurchDetailScreen(navController: NavController, viewModel: Churchviewmodel,
                         Text(text ="${name.value}",
                                 fontSize= 20.sp,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(2.dp)
+                                modifier = Modifier.padding(1.dp)
                         )
 
                         Image(
@@ -110,7 +114,7 @@ fun ChurchDetailScreen(navController: NavController, viewModel: Churchviewmodel,
                                         painter = painterResource(id = R.drawable.baseline_people_24),
                                         contentDescription = null,
                                         tint = Color.Gray,
-                                        modifier = Modifier.padding(end = 2.dp)
+                                        modifier = Modifier.padding(end = 1.dp)
                                 )
                                 Text(text ="PASTORS",
                                         fontSize= 20.sp,
@@ -124,11 +128,24 @@ fun ChurchDetailScreen(navController: NavController, viewModel: Churchviewmodel,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(2.dp)
                         )
-                        Row{
-                                TextButton(onClick = { /*TODO*/ }) {
+                        Column{
+                                Button(
+                                        onClick = {
+                                                if (!phn.isEmpty()) {
+                                                        val intent = Intent(Intent.ACTION_DIAL)
+                                                        intent.data = Uri.parse("tel:+254$phn")
+                                                        startActivity(intent)
+                                                }
+                                        },
+                                        shape = RoundedCornerShape(10.dp),
+                                        modifier = Modifier.fillMaxWidth(1f),
+                                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFD81B60))
+                                ) {
                                         Text(
-                                                text = "CALL",
-                                                color= Color(R.color.blue)
+                                                text = "Call Pastor",
+                                                color= Color.White,
+                                                modifier = Modifier.padding(6.dp)
+
                                         )
 
                                 }

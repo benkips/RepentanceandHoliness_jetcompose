@@ -34,14 +34,14 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import www.digitalexperts.church_traker.R
+import java.net.URLDecoder
 
 @Composable
 fun CommonWebinfo(urls:String){
-    var mystringUrls:String=urls
+    var mystringUrls:String=URLDecoder.decode(urls);
     val visibility = remember { mutableStateOf(false)}
 
     Log.d("Webinfo", "Webinfo: " + mystringUrls)
-
 
     if (visibility.value){
         Dialog(
