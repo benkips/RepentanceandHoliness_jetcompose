@@ -30,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import www.digitalexperts.church_traker.Network.Resource
@@ -48,6 +49,7 @@ fun ChurchDetailScreen(navController: NavController, viewModel: Churchviewmodel,
 
         val isUpdating = viewModel.isUpdating.collectAsState()
         val context = LocalContext.current
+
 
 
 
@@ -82,6 +84,8 @@ fun ChurchDetailScreen(navController: NavController, viewModel: Churchviewmodel,
         //pastorsdetails
         val pastorsname = viewModel2.name.collectAsState()
         val phoneno = viewModel2.phone.collectAsState()
+
+
 
         Surface (
                modifier = Modifier
@@ -128,13 +132,15 @@ fun ChurchDetailScreen(navController: NavController, viewModel: Churchviewmodel,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(2.dp)
                         )
-                        Column{
+                        Column(modifier = Modifier
+                                .padding(vertical = 5.dp, horizontal = 1.dp)){
                                 Button(
                                         onClick = {
-                                                if (!phn.isEmpty()) {
-                                                        val intent = Intent(Intent.ACTION_DIAL)
-                                                        intent.data = Uri.parse("tel:+254$phn")
-                                                        startActivity(intent)
+
+                                                if (!phoneno.value.isEmpty()) {
+                                                        val phn=phoneno.value
+                                                        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:+254$phn"))
+                                                        startActivity(context, intent, null)
                                                 }
                                         },
                                         shape = RoundedCornerShape(10.dp),

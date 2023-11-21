@@ -26,67 +26,77 @@ import www.digitalexperts.church_traker.Viewmodels.MusicViewModel
 import www.digitalexperts.church_traker.Viewmodels.Pastorsviewmodel
 import www.digitalexperts.church_traker.Viewmodels.Pdfviewmodel
 
-sealed class  Screens(val routes:String){
-    object  Main:Screens(routes = Constants.Screens.MAIN_SCREEN)
-    object  Church_Detail:Screens(routes = Constants.Screens.CHURCH_DETAIL_SCREEN)
-    object  Teachings:Screens(routes = Constants.Screens.TEACHINGS_SCREEN)
-    object  Webinfo:Screens(routes = Constants.Screens.WEBVIEW_SCREEN)
-    object  Radio:Screens(routes = Constants.Screens.RADIO_SCREEN)
-    object  Pdfteaching:Screens(routes = Constants.Screens.MAGAZINE_SCREEN)
-    object Contentscreen:Screens(routes = Constants.Screens.CONTENT_SCREEN)
-    object Healingscreen:Screens(routes = Constants.Screens.HEALING_SCREEN)
+sealed class Screens(val routes: String) {
+    object Main : Screens(routes = Constants.Screens.MAIN_SCREEN)
+    object Church_Detail : Screens(routes = Constants.Screens.CHURCH_DETAIL_SCREEN)
+    object Teachings : Screens(routes = Constants.Screens.TEACHINGS_SCREEN)
+    object Webinfo : Screens(routes = Constants.Screens.WEBVIEW_SCREEN)
+    object Radio : Screens(routes = Constants.Screens.RADIO_SCREEN)
+    object Pdfteaching : Screens(routes = Constants.Screens.MAGAZINE_SCREEN)
+    object Contentscreen : Screens(routes = Constants.Screens.CONTENT_SCREEN)
+    object Healingscreen : Screens(routes = Constants.Screens.HEALING_SCREEN)
 }
 
 
 @Composable
 fun SetupNavHost(navController: NavHostController) {
 
-    val ChurchViewModel= hiltViewModel<Churchviewmodel>()
-    val PastorsViewModel= hiltViewModel<Pastorsviewmodel>()
-    val folderviewmodel= hiltViewModel<Folderviewmodel>()
-    val musicViewModel= hiltViewModel<MusicViewModel>()
-    val pdfviewmodel= hiltViewModel<Pdfviewmodel>()
-    val contentviewmodel= hiltViewModel<Contentviewmodel>()
-    val healingviewmodel= hiltViewModel<Healingviewmodel>()
+    val ChurchViewModel = hiltViewModel<Churchviewmodel>()
+    val PastorsViewModel = hiltViewModel<Pastorsviewmodel>()
+    val folderviewmodel = hiltViewModel<Folderviewmodel>()
+    val musicViewModel = hiltViewModel<MusicViewModel>()
+    val pdfviewmodel = hiltViewModel<Pdfviewmodel>()
+    val contentviewmodel = hiltViewModel<Contentviewmodel>()
+    val healingviewmodel = hiltViewModel<Healingviewmodel>()
 
-    NavHost(navController =navController,
-       startDestination = Screens.Main.routes){
+    NavHost(
+        navController = navController,
+        startDestination = Screens.Main.routes
+    ) {
 
 
-        composable(route =Screens.Main.routes ){
+        composable(route = Screens.Main.routes) {
 
-            MainDashboard(navController =navController , viewModel =ChurchViewModel )
+            MainDashboard(navController = navController, viewModel = ChurchViewModel)
         }
 
-        composable(route =Screens.Church_Detail.routes  + "/{id}"){ backStackEntry ->
+        composable(route = Screens.Church_Detail.routes + "/{id}") { backStackEntry ->
 
-            ChurchDetailScreen(navController =navController , viewModel =ChurchViewModel, viewModel2 = PastorsViewModel)
+            ChurchDetailScreen(
+                navController = navController,
+                viewModel = ChurchViewModel,
+                viewModel2 = PastorsViewModel
+            )
         }
-        composable(route =Screens.Teachings.routes ){ backStackEntry ->
+        composable(route = Screens.Teachings.routes) { backStackEntry ->
 
-            Teachings(navController =navController , viewModel =folderviewmodel)
+            Teachings(navController = navController, viewModel = folderviewmodel)
         }
-        composable(route =Screens.Webinfo.routes ){ backStackEntry ->
+        composable(route = Screens.Webinfo.routes) { backStackEntry ->
 
-            Webinfo( viewModel =folderviewmodel)
+            Webinfo(viewModel = folderviewmodel)
         }
-        composable(route =Screens.Radio.routes ){ backStackEntry ->
+        composable(route = Screens.Radio.routes) { backStackEntry ->
 
-            Radio( isMusicPlaying = musicViewModel.isMusicPlaying,musicViewModel,navController)
+            Radio(isMusicPlaying = musicViewModel.isMusicPlaying, musicViewModel, navController)
         }
-        composable(route =Screens.Pdfteaching.routes ){ backStackEntry ->
+        composable(route = Screens.Pdfteaching.routes) { backStackEntry ->
 
-            Pdfteachings(navController =navController,viewModel =pdfviewmodel)
-        }
-
-        composable(route =Screens.Contentscreen.routes ){ backStackEntry ->
-
-            Content(navController =navController , viewModel =contentviewmodel, viewModel2 = pdfviewmodel)
+            Pdfteachings(navController = navController, viewModel = pdfviewmodel)
         }
 
-        composable(route =Screens.Healingscreen.routes ){ backStackEntry ->
+        composable(route = Screens.Contentscreen.routes) { backStackEntry ->
 
-            Healingviews(navController =navController , viewModel =healingviewmodel)
+            Content(
+                navController = navController,
+                viewModel = contentviewmodel,
+                viewModel2 = pdfviewmodel
+            )
+        }
+
+        composable(route = Screens.Healingscreen.routes) { backStackEntry ->
+
+            Healingviews(navController = navController, viewModel = healingviewmodel)
         }
         composable(
             "webviews/{urls}",
@@ -95,8 +105,7 @@ fun SetupNavHost(navController: NavHostController) {
                     type = NavType.StringType
                 }
             ),
-        ){
-                navBackStackEntry ->
+        ) { navBackStackEntry ->
             navBackStackEntry.arguments?.getString("urls")?.let { urlz ->
                 CommonWebinfo(urlz)
             }
@@ -109,13 +118,12 @@ fun SetupNavHost(navController: NavHostController) {
                     type = NavType.StringType
                 }
             ),
-        ){
-                navBackStackEntry ->
+        ) { navBackStackEntry ->
             navBackStackEntry.arguments?.getString("document")?.let { document ->
                 Pdfview(document)
             }
         }
-    
+
     }
 
 }

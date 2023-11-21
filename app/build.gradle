@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "www.digitalexperts.church_traker"
-        minSdk 24
+        minSdk 21
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -106,14 +106,16 @@ dependencies {
     implementation "androidx.media3:media3-session:1.2.0-rc01"
     implementation "androidx.media3:media3-exoplayer-dash:1.2.0-rc01"
 
-
-
     implementation 'io.github.farimarwat:permissionmate-compose:1.1'
     implementation 'io.github.grizzi91:bouquet:1.1.2'
     implementation 'androidx.work:work-runtime-ktx:2.7.0'
 
     implementation "androidx.paging:paging-runtime:3.1.1"
     implementation "androidx.paging:paging-compose:1.0.0-alpha16"
+
+    // firebase for notification
+    implementation 'com.google.firebase:firebase-messaging-ktx:21.0.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:18.0.0'
 
 }
 kapt {
