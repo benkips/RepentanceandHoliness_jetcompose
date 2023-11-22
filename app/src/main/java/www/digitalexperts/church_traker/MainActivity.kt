@@ -42,6 +42,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.farimarwat.permissionmate.PMate
 import com.farimarwat.permissionmate.rememberPermissionMateState
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import www.digitalexperts.church_traker.BackgroundServices.MediaService
@@ -57,6 +58,7 @@ import java.nio.charset.StandardCharsets
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val TAG = "MainActivity"
+    val TOPIC="Alertstwo"
 
     @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -74,6 +76,7 @@ class MainActivity : ComponentActivity() {
                 val Scope = rememberCoroutineScope()
                 var weblink=""
 
+                FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
                 //creating list
                 var android13perm=""
@@ -224,7 +227,7 @@ class MainActivity : ComponentActivity() {
                                             weblink= URLEncoder.encode(weblink, StandardCharsets.UTF_8.toString())
                                             navController.navigate("webviews/$weblink")
                                         }else if (sideNavigationItem.title.equals("Contacts")){
-                                            navController.navigate("webviews/$weblink")
+                                            navController.navigate(Constants.Screens.CALL_SCREEN)
                                         }else if (sideNavigationItem.title.equals("Share")){
                                             val sendIntent = Intent()
                                             sendIntent.action = Intent.ACTION_SEND

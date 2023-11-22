@@ -51,14 +51,14 @@
                 android:value="" />
         </activity>
 
-       <!-- <service
+        <service
             android:name=".BackgroundServices.MediaService"
             android:exported="true"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>
                 <action android:name="androidx.media3.session.MediaSessionService" />
             </intent-filter>
-        </service>-->
+        </service>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import www.digitalexperts.church_traker.Presentation.Dashboard.CallScreen
 import www.digitalexperts.church_traker.Presentation.Dashboard.ChurchDetailScreen
 import www.digitalexperts.church_traker.Presentation.Dashboard.CommonWebinfo
 import www.digitalexperts.church_traker.Presentation.Dashboard.Content
@@ -35,6 +36,7 @@ sealed class Screens(val routes: String) {
     object Pdfteaching : Screens(routes = Constants.Screens.MAGAZINE_SCREEN)
     object Contentscreen : Screens(routes = Constants.Screens.CONTENT_SCREEN)
     object Healingscreen : Screens(routes = Constants.Screens.HEALING_SCREEN)
+    object Callscreen : Screens(routes = Constants.Screens.CALL_SCREEN)
 }
 
 
@@ -98,6 +100,12 @@ fun SetupNavHost(navController: NavHostController) {
 
             Healingviews(navController = navController, viewModel = healingviewmodel)
         }
+
+        composable(route = Screens.Callscreen.routes) {
+
+            CallScreen()
+        }
+
         composable(
             "webviews/{urls}",
             arguments = listOf(

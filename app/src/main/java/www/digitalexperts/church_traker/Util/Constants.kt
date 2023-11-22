@@ -10,5 +10,6 @@ class Constants {
        const val MAGAZINE_SCREEN="pdfs"
        const val CONTENT_SCREEN="pdf_content"
        const val HEALING_SCREEN="healing_screen"
+       const val CALL_SCREEN="call_screen"
     }
 }
