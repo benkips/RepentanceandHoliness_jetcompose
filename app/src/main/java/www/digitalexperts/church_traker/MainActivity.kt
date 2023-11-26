@@ -42,6 +42,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.farimarwat.permissionmate.PMate
 import com.farimarwat.permissionmate.rememberPermissionMateState
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -65,6 +66,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        MobileAds.initialize(this) { }
         setContent {
             RepentanceandHolinessTheme {
                 // A surface container using the 'background' color from the theme
@@ -265,7 +267,7 @@ class MainActivity : ComponentActivity() {
                                 backgroundColor = Color(0xFF0f82d2),
                                 contentColor =Color(0xFFFFFFFF) ,
                                 elevation = 8.dp,
-                                title = { Text(text = "Repentance and Holliness App") },
+                                title = { Text(text ="Repentance and Holiness") },
                                 navigationIcon = {
                                     IconButton(onClick = {
                                         Scope.launch {

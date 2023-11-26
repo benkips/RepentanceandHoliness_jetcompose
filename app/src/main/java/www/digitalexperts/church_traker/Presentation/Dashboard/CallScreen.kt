@@ -132,7 +132,7 @@ fun CallScreen() {
                     tint = Color.Gray,
                     modifier = Modifier.padding(end = 1.dp)
                 )
-                Text(text ="Sms The Radio on  and WhatsApp line",
+                Text(text ="Sms The Radio through Text WhatsApp on",
                     fontSize= 20.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(1.dp))

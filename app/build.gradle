@@ -14,7 +14,7 @@ android {
         applicationId "www.digitalexperts.church_traker"
         minSdk 21
         targetSdk 33
-        versionCode 1
+        versionCode 71
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -116,6 +116,9 @@ dependencies {
     // firebase for notification
     implementation 'com.google.firebase:firebase-messaging-ktx:21.0.0'
     implementation 'com.google.firebase:firebase-analytics-ktx:18.0.0'
+    // Mobile Ads SDK
+    implementation 'com.google.android.gms:play-services-ads:20.3.0'
+
 
 }
 kapt {

@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -42,7 +43,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import www.digitalexperts.church_traker.R
 import www.digitalexperts.church_traker.Viewmodels.MusicViewModel
 
@@ -252,6 +257,20 @@ fun Otherbtns(navController: NavController,viewModel: MusicViewModel) {
             )
 
         }
+        val adWidth = LocalConfiguration.current.screenWidthDp - 32
+        // shows an inline adaptive banner test ad
+        AndroidView(
+            factory = { context ->
+                AdView(context).apply {
+                    adSize = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(
+                        context,
+                        adWidth
+                    )
+                    adUnitId = context.getString(R.string.ad_id_banner)
+                    loadAd(AdRequest.Builder().build())
+                }
+            }
+        )
     }
 
 

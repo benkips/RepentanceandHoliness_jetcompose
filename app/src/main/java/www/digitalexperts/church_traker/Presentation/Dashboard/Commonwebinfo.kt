@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -23,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -65,9 +67,10 @@ fun CommonWebinfo(urls:String){
                         painter = painterResource(id = R.drawable.dove),
                         contentDescription = null,
                         contentScale = ContentScale.Fit,
+
                         modifier = Modifier
                             .height(200.dp)
-                            .fillMaxWidth(),
+                            .clip(shape = CircleShape),
 
                         )
 
@@ -93,9 +96,10 @@ fun CommonWebinfo(urls:String){
                         modifier = Modifier
                             .padding(top = 10.dp, start = 25.dp, end = 25.dp)
                             .fillMaxWidth(),
-                        letterSpacing = 3.sp,
+                        letterSpacing = 5.sp,
+                        fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.error,
                     )
                     //.........................Spacer
                     Spacer(modifier = Modifier.height(24.dp))

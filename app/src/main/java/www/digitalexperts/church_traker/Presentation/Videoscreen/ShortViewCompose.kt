@@ -3,13 +3,18 @@ package www.digitalexperts.church_traker.Presentation.Videoscreen
 import android.app.Activity
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -91,6 +96,7 @@ private fun SingleVideoItemContent(
     VideoHeader: @Composable() () -> Unit,
     VideoBottom: @Composable() () -> Unit,
 ) {
+    val contextForToast = LocalContext.current.applicationContext
     Box(modifier = Modifier.fillMaxSize()){
         VideoPlayer(videoUrl,pagerState,pager,pauseIconVisibleState)
         VideoHeader.invoke()
@@ -101,6 +107,20 @@ private fun SingleVideoItemContent(
             Box(modifier = Modifier
                 .fillMaxSize()
                 .background(color = Color.Black))
+        }
+        FloatingActionButton(
+            modifier = Modifier
+                .padding(bottom = 100.dp, end = 20.dp)
+                .align(alignment = Alignment.BottomEnd),
+            backgroundColor =  Color(0xFFD81B60),
+            contentColor = Color.White,
+            onClick = {
+
+                Toast.makeText(contextForToast, "Scroll up to see more videos", Toast.LENGTH_SHORT).show()
+
+            }
+        ) {
+            Icon(imageVector = Icons.Filled.KeyboardArrowUp, contentDescription = "UP")
         }
     }
 }
@@ -139,7 +159,11 @@ fun VideoPlayer(
     exoPlayer.repeatMode = Player.REPEAT_MODE_ONE
 
     DisposableEffect(
-        Box(modifier = Modifier.fillMaxSize()){
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+
+        ){
             AndroidView(factory = {
                 PlayerView(context).apply {
                     hideController()
@@ -167,6 +191,15 @@ fun VideoPlayer(
                     modifier = Modifier
                         .align(Alignment.Center)
                         .size(80.dp))
+            Text(
+                text = videoUrl!!.message,
+                color= Color.White,
+                modifier = Modifier
+                    .padding(top = 100.dp)
+                    .align(Alignment.TopCenter)
+
+
+            )
         }
     ) {
         onDispose {
