@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import androidx.core.net.toUri
 import www.digitalexperts.church_traker.MainActivity
 import java.io.IOException
@@ -19,9 +20,15 @@ fun Context.gotoscreen(screen:String): PendingIntent {
         this,
         MainActivity::class.java
     )
+
     val pendingintent: PendingIntent = TaskStackBuilder.create(this).run {
         addNextIntentWithParentStack(taskDetailIntent)
-        getPendingIntent(REQUEST_CODE, PendingIntent.FLAG_UPDATE_CURRENT)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            getPendingIntent(REQUEST_CODE, PendingIntent.FLAG_IMMUTABLE)
+        }else{
+            getPendingIntent(REQUEST_CODE, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
     }
 
     return pendingintent
