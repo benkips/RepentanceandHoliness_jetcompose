@@ -38,7 +38,6 @@ android {
     }
     buildFeatures {
         compose true
-        viewBinding true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -107,7 +106,6 @@ dependencies {
     implementation "androidx.media3:media3-session:1.2.0-rc01"
     implementation "androidx.media3:media3-exoplayer-dash:1.2.0-rc01"
 
-    implementation 'io.github.farimarwat:permissionmate-compose:1.1'
     implementation 'io.github.grizzi91:bouquet:1.1.2'
     implementation 'androidx.work:work-runtime-ktx:2.8.1'
 
@@ -115,11 +113,12 @@ dependencies {
     implementation "androidx.paging:paging-compose:1.0.0-alpha16"
 
     // firebase for notification
-    implementation 'com.google.firebase:firebase-messaging-ktx:23.3.1'
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.5.0'
+    implementation 'com.google.firebase:firebase-messaging-ktx:21.0.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.0.0'
     // Mobile Ads SDK
     implementation 'com.google.android.gms:play-services-ads:20.3.0'
-    implementation 'net.samystudio.permissionlauncher:permissionlauncher-ktx:0.9.1'
+
+
 
 }
 kapt {

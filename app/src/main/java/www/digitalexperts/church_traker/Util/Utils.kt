@@ -7,6 +7,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
+import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.core.net.toUri
 import www.digitalexperts.church_traker.MainActivity
 import java.io.IOException
@@ -41,4 +43,8 @@ fun getBitmapfromUrl(imageUrl: String?): Bitmap? {
         System.out.println(e)
         null
     }
+}
+
+fun ComponentActivity.showToast(s: String) {
+    Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
 }

@@ -2,7 +2,6 @@ package www.digitalexperts.church_traker
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -46,15 +45,12 @@ import com.google.android.gms.ads.MobileAds
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import net.samystudio.permissionlauncher.RationalePermissionLauncher
-import net.samystudio.permissionlauncher.allOf
-import net.samystudio.permissionlauncher.createMultiplePermissionsLauncher
-import net.samystudio.permissionlauncher.maxSdkVersion
 import www.digitalexperts.church_traker.BackgroundServices.MediaService
 import www.digitalexperts.church_traker.Data.models.BottomNavigationItem
 import www.digitalexperts.church_traker.Data.models.SideNavigationItem
 import www.digitalexperts.church_traker.Navigation.SetupNavHost
 import www.digitalexperts.church_traker.Util.Constants
+import www.digitalexperts.church_traker.Util.PermissionManager
 import www.digitalexperts.church_traker.ui.theme.RepentanceandHolinessTheme
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -64,39 +60,17 @@ import java.nio.charset.StandardCharsets
 class MainActivity : ComponentActivity() {
     private val TAG = "MainActivity"
     val TOPIC="Alertstwo"
-
+    private lateinit var permissionManager: PermissionManager
     @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         MobileAds.initialize(this) { }
+        permissionManager = PermissionManager(this)
+
         var android13perm=""
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            android13perm=android.Manifest.permission.POST_NOTIFICATIONS
-        } else {
-            android13perm=android.Manifest.permission.READ_EXTERNAL_STORAGE
-        }
-        val myPermissionLauncher = createMultiplePermissionsLauncher(
-            allOf(
-                android13perm,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE maxSdkVersion Build.VERSION_CODES.P
-            )
-        )
-        myPermissionLauncher.launch(
-            rationaleCallback = { permissions, rationalePermissionLauncher ->
-                showRationale(permissions, rationalePermissionLauncher)
-                // From your rationale call either :
-                // + rationalePermissionLauncher.cancel() to cancel request
-                // + rationalePermissionLauncher.deny() to call denied callback
-                // + rationalePermissionLauncher.accept() to continue process and show Android dialog for permissions
-            },
-            deniedCallback = { permissions, neverAskAgain ->
-                // handle denied
-            }
-        ) {
-            // handle permissions granted
-        }
+
         setContent {
             RepentanceandHolinessTheme {
                 // A surface container using the 'background' color from the theme
@@ -118,17 +92,14 @@ class MainActivity : ComponentActivity() {
                      android13perm=android.Manifest.permission.READ_EXTERNAL_STORAGE
                 }
 
-
-
-
-               /* val permission = listOf(
-                    PMate(android.Manifest.permission.CAMERA,true,"Camera permission is not necessary. You can skip it"),
-                    PMate(android13perm,true,"permission is  necessary. You can skip it"),
-
+                val permissions = arrayOf(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android13perm
                 )
-                //creating state
-                val pms = rememberPermissionMateState(permissions = permission)
-                pms.start()*/
+
+                permissionManager.requestPermissions(permissions)
+
+
 
                 val items = listOf(
                     BottomNavigationItem(
@@ -378,7 +349,9 @@ class MainActivity : ComponentActivity() {
 
 
             }
+
         }
+
     }
 
 
@@ -390,22 +363,10 @@ class MainActivity : ComponentActivity() {
                 startService(intent)
             }
     }
-    private fun showRationale(
-        permissions: Set<String>,
-        rationalePermissionLauncher: RationalePermissionLauncher,
-    ) {
-        AlertDialog.Builder(this)
-            .setTitle("Rationale")
-            .setMessage(
-                "To complete the action, this permission is required; without it we are not able to perform the action; please allow the permission ${
-                    permissions.joinToString(" & ") { it.split(".").last() }
-                }.",
-            )
-            .setPositiveButton("Accept") { _, _ -> rationalePermissionLauncher.accept() }
-            .setNegativeButton("Deny") { _, _ -> rationalePermissionLauncher.deny() }
-            .setNeutralButton("Cancel") { _, _ -> rationalePermissionLauncher.cancel() }
-            .create()
-            .show()
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        permissionManager.onRequestPermissionsResult(requestCode, permissions,grantResults)
     }
 
 }
