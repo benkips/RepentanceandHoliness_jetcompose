@@ -30,7 +30,7 @@ class PermissionManager(private val componentActivity: ComponentActivity) { //д
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                     //componentActivity.showToast("Разрешения получены!")
                 } else {
-                    componentActivity.showToast("Permissions Denied")
+                    //componentActivity.showToast("Permissions Denied")
                 }
             }
         }
