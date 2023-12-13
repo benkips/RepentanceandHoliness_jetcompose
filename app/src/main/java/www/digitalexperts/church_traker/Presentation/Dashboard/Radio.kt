@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -62,7 +63,7 @@ private const val MEDIA_URL = "https://traffic.libsyn.com/secure/adbackstage/ADB
 
 
 @Composable
-fun Radio(isMusicPlaying: Boolean,viewModel: MusicViewModel,navController: NavController) {
+fun Radio(innerPadding: PaddingValues, isMusicPlaying: Boolean, viewModel: MusicViewModel, navController: NavController) {
 
     Surface(
         modifier = Modifier
@@ -73,6 +74,7 @@ fun Radio(isMusicPlaying: Boolean,viewModel: MusicViewModel,navController: NavCo
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
+                .padding(innerPadding)
 
 
         ) {

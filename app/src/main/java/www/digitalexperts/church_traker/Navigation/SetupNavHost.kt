@@ -15,9 +15,9 @@ import www.digitalexperts.church_traker.Presentation.Dashboard.Healingviews
 import www.digitalexperts.church_traker.Presentation.Dashboard.MainDashboard
 import www.digitalexperts.church_traker.Presentation.Dashboard.Pdfteachings
 import www.digitalexperts.church_traker.Presentation.Dashboard.Pdfview
-import www.digitalexperts.church_traker.Presentation.Dashboard.Radio
 import www.digitalexperts.church_traker.Presentation.Dashboard.Teachings
 import www.digitalexperts.church_traker.Presentation.Dashboard.Webinfo
+import www.digitalexperts.church_traker.Presentation.Tablayout.TabScreen
 import www.digitalexperts.church_traker.Util.Constants
 import www.digitalexperts.church_traker.Viewmodels.Churchviewmodel
 import www.digitalexperts.church_traker.Viewmodels.Contentviewmodel
@@ -80,7 +80,8 @@ fun SetupNavHost(navController: NavHostController) {
         }
         composable(route = Screens.Radio.routes) { backStackEntry ->
 
-            Radio(isMusicPlaying = musicViewModel.isMusicPlaying, musicViewModel, navController)
+            /*Radio(isMusicPlaying = musicViewModel.isMusicPlaying, musicViewModel, navController)*/
+            TabScreen(musicViewModel, navController)
         }
         composable(route = Screens.Pdfteaching.routes) { backStackEntry ->
 
@@ -104,6 +105,7 @@ fun SetupNavHost(navController: NavHostController) {
         composable(route = Screens.Callscreen.routes) {
 
             CallScreen()
+
         }
 
 

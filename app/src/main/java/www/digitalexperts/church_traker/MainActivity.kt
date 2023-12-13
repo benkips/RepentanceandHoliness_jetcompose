@@ -7,6 +7,8 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconButton
@@ -59,8 +61,9 @@ import java.nio.charset.StandardCharsets
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val TAG = "MainActivity"
-    val TOPIC="Alertstwo"
+    val TOPIC = "Alertstwo"
     private lateinit var permissionManager: PermissionManager
+
     @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +72,7 @@ class MainActivity : ComponentActivity() {
         MobileAds.initialize(this) { }
         permissionManager = PermissionManager(this)
 
-        var android13perm=""
+        var android13perm = ""
 
         setContent {
             RepentanceandHolinessTheme {
@@ -80,16 +83,16 @@ class MainActivity : ComponentActivity() {
                 }
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val Scope = rememberCoroutineScope()
-                var weblink=""
+                var weblink = ""
 
                 FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
                 //creating list
-                var android13perm=""
-                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                     android13perm=android.Manifest.permission.POST_NOTIFICATIONS
+                var android13perm = ""
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    android13perm = android.Manifest.permission.POST_NOTIFICATIONS
                 } else {
-                     android13perm=android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    android13perm = android.Manifest.permission.READ_EXTERNAL_STORAGE
                 }
 
                 val permissions = arrayOf(
@@ -98,7 +101,6 @@ class MainActivity : ComponentActivity() {
                 )
 
                 permissionManager.requestPermissions(permissions)
-
 
 
                 val items = listOf(
@@ -206,35 +208,54 @@ class MainActivity : ComponentActivity() {
                                             drawerState.close()
                                         }
 
-                                        if (sideNavigationItem.title.equals("Home")){
+                                        if (sideNavigationItem.title.equals("Home")) {
                                             navController.navigate(Constants.Screens.MAIN_SCREEN)
-                                        }else if (sideNavigationItem.title.equals("Healings of the LORD")){
+                                        } else if (sideNavigationItem.title.equals("Healings of the LORD")) {
                                             navController.navigate(Constants.Screens.HEALING_SCREEN)
-                                        }else if (sideNavigationItem.title.equals("JESUS IS LORD  Radio")){
+                                        } else if (sideNavigationItem.title.equals("JESUS IS LORD  Radio")) {
                                             navController.navigate(Constants.Screens.RADIO_SCREEN)
-                                        }else if (sideNavigationItem.title.equals("Visitations of the LORD")){
-                                            weblink = "https://repentanceandholinessinfo.com/visitations.php"
-                                            weblink= URLEncoder.encode(weblink, StandardCharsets.UTF_8.toString())
+                                        } else if (sideNavigationItem.title.equals("Visitations of the LORD")) {
+                                            weblink =
+                                                "https://repentanceandholinessinfo.com/visitations.php"
+                                            weblink = URLEncoder.encode(
+                                                weblink,
+                                                StandardCharsets.UTF_8.toString()
+                                            )
                                             navController.navigate("webviews/$weblink")
-                                        }else if (sideNavigationItem.title.equals("Prophecies and Fulfilments")){
-                                            weblink = "https://repentanceandholinessinfo.com/prophecies.php"
-                                            weblink= URLEncoder.encode(weblink, StandardCharsets.UTF_8.toString())
+                                        } else if (sideNavigationItem.title.equals("Prophecies and Fulfilments")) {
+                                            weblink =
+                                                "https://repentanceandholinessinfo.com/prophecies.php"
+                                            weblink = URLEncoder.encode(
+                                                weblink,
+                                                StandardCharsets.UTF_8.toString()
+                                            )
                                             navController.navigate("webviews/$weblink")
-                                        }else if (sideNavigationItem.title.equals("Twitter Conversations")){
-                                            weblink = "https://repentanceandholinessinfo.com/twitter.php"
-                                            weblink= URLEncoder.encode(weblink, StandardCharsets.UTF_8.toString())
+                                        } else if (sideNavigationItem.title.equals("Twitter Conversations")) {
+                                            weblink =
+                                                "https://repentanceandholinessinfo.com/twitter.php"
+                                            weblink = URLEncoder.encode(
+                                                weblink,
+                                                StandardCharsets.UTF_8.toString()
+                                            )
                                             navController.navigate("webviews/$weblink")
-                                        }else if (sideNavigationItem.title.equals("Facebook")){
-                                            weblink = "https://web.facebook.com/jesusiscomingofficial/?_rdc=1&_rdr"
-                                            weblink= URLEncoder.encode(weblink, StandardCharsets.UTF_8.toString())
+                                        } else if (sideNavigationItem.title.equals("Facebook")) {
+                                            weblink =
+                                                "https://web.facebook.com/jesusiscomingofficial/?_rdc=1&_rdr"
+                                            weblink = URLEncoder.encode(
+                                                weblink,
+                                                StandardCharsets.UTF_8.toString()
+                                            )
                                             navController.navigate("webviews/$weblink")
-                                        }else if (sideNavigationItem.title.equals("Instagram")){
+                                        } else if (sideNavigationItem.title.equals("Instagram")) {
                                             weblink = "https://www.instagram.com/jesusiscoming_2/"
-                                            weblink= URLEncoder.encode(weblink, StandardCharsets.UTF_8.toString())
+                                            weblink = URLEncoder.encode(
+                                                weblink,
+                                                StandardCharsets.UTF_8.toString()
+                                            )
                                             navController.navigate("webviews/$weblink")
-                                        }else if (sideNavigationItem.title.equals("Contacts")){
+                                        } else if (sideNavigationItem.title.equals("Contacts")) {
                                             navController.navigate(Constants.Screens.CALL_SCREEN)
-                                        }else if (sideNavigationItem.title.equals("Share")){
+                                        } else if (sideNavigationItem.title.equals("Share")) {
                                             val sendIntent = Intent()
                                             sendIntent.action = Intent.ACTION_SEND
                                             sendIntent.putExtra(
@@ -269,9 +290,9 @@ class MainActivity : ComponentActivity() {
                                         shape = RoundedCornerShape(12.dp),
                                     ),
                                 backgroundColor = Color(0xFF0f82d2),
-                                contentColor =Color(0xFFFFFFFF) ,
+                                contentColor = Color(0xFFFFFFFF),
                                 elevation = 8.dp,
-                                title = { Text(text ="Repentance and Holiness") },
+                                title = { Text(text = "Repentance and Holiness") },
                                 navigationIcon = {
                                     IconButton(onClick = {
                                         Scope.launch {
@@ -296,7 +317,7 @@ class MainActivity : ComponentActivity() {
                                             topEnd = 30.dp
                                         )
                                     ),
-                               // containerColor = Color(0xFFFFFFFF),
+                                // containerColor = Color(0xFFFFFFFF),
                                 contentColor = Color(0xFF888888)
                             ) {
                                 items.forEachIndexed { index, bottomNavigationItem ->
@@ -305,13 +326,13 @@ class MainActivity : ComponentActivity() {
                                         selected = selectedItemIndex == index,
                                         onClick = {
                                             selectedItemIndex = index
-                                            if(bottomNavigationItem.title.equals("Home")){
+                                            if (bottomNavigationItem.title.equals("Home")) {
                                                 navController.navigate(Constants.Screens.MAIN_SCREEN)
-                                            }else if (bottomNavigationItem.title.equals("Teachings")){
+                                            } else if (bottomNavigationItem.title.equals("Teachings")) {
                                                 navController.navigate(Constants.Screens.TEACHINGS_SCREEN)
-                                            }else if (bottomNavigationItem.title.equals("Pdf")){
+                                            } else if (bottomNavigationItem.title.equals("Pdf")) {
                                                 navController.navigate(Constants.Screens.MAGAZINE_SCREEN)
-                                            }else if (bottomNavigationItem.title.equals("Live Radio")){
+                                            } else if (bottomNavigationItem.title.equals("Live Radio")) {
                                                 navController.navigate(Constants.Screens.RADIO_SCREEN)
                                                 startMusicService()
                                             }
@@ -342,8 +363,19 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         }
-                    ) {
-                        SetupNavHost(navController = navController)
+                    ) { innerPadding ->
+                        Box(
+                            modifier = Modifier.padding(
+                                PaddingValues(
+                                    0.dp,
+                                    0.dp,
+                                    0.dp,
+                                    innerPadding.calculateBottomPadding()
+                                )
+                            )
+                        ) {
+                            SetupNavHost(navController = navController)
+                        }
                     }
                 }
 
@@ -356,17 +388,21 @@ class MainActivity : ComponentActivity() {
 
 
     private fun startMusicService() {
-            val intent = Intent(this, MediaService::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(intent)
-            } else {
-                startService(intent)
-            }
+        val intent = Intent(this, MediaService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        permissionManager.onRequestPermissionsResult(requestCode, permissions,grantResults)
+        permissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
 }
