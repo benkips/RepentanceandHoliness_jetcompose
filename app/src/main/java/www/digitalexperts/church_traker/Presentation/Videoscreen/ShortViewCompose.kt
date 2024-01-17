@@ -6,12 +6,15 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -27,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.paging.compose.LazyPagingItems
@@ -42,7 +46,10 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import www.digitalexperts.church_traker.R
+import www.digitalexperts.church_traker.Util.DownloadFile
 import www.digitalexperts.church_traker.models.Healings
+
 
 @Composable
 fun ShortViewCompose(
@@ -108,9 +115,12 @@ private fun SingleVideoItemContent(
                 .fillMaxSize()
                 .background(color = Color.Black))
         }
+
+
+
         FloatingActionButton(
             modifier = Modifier
-                .padding(bottom = 100.dp, end = 20.dp)
+                .padding(bottom = 50.dp, end = 20.dp)
                 .align(alignment = Alignment.BottomEnd),
             backgroundColor =  Color(0xFFD81B60),
             contentColor = Color.White,
@@ -121,6 +131,22 @@ private fun SingleVideoItemContent(
             }
         ) {
             Icon(imageVector = Icons.Filled.KeyboardArrowUp, contentDescription = "UP")
+        }
+
+        FloatingActionButton(
+            modifier = Modifier
+                .padding(bottom = 50.dp, start = 20.dp)
+                .align(alignment = Alignment.BottomStart),
+            backgroundColor =  Color(0xFFD81B60),
+            contentColor = Color.White,
+            onClick = {
+                var downloadFile=DownloadFile(contextForToast)
+                downloadFile.downloadFile(videoUrl!!.vidlink)
+                Toast.makeText(contextForToast, "Downloading ...check your downloads", Toast.LENGTH_SHORT).show()
+
+            }
+        ) {
+            Icon( painter = painterResource(R.drawable.baseline_file_download_24), contentDescription = "UP")
         }
     }
 }
@@ -207,5 +233,24 @@ fun VideoPlayer(
         }
     }
 }
+@Composable
+private fun VideoActions(
+    modifier: Modifier = Modifier,
+    onDownloadClick: (() -> Unit)? = null,
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
 
+        onDownloadClick?.let {
+            IconButton(onClick = it) {
+                Icon(
+                    painter = painterResource(R.drawable.baseline_file_download_24),
+                    contentDescription = "download",
+                )
+            }
+        }
+    }
+}
 

@@ -1,17 +1,24 @@
 package www.digitalexperts.church_traker.Presentation.Dashboard
 
+import android.app.DownloadManager
 import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Environment
 import android.os.Message
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.ConsoleMessage
+import android.webkit.CookieManager
+import android.webkit.DownloadListener
+import android.webkit.URLUtil
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 
 
 class WebviewHolder(context: Context) {
@@ -79,7 +86,46 @@ class WebviewHolder(context: Context) {
             }
             false
         })
+
+        webview.setDownloadListener(object : DownloadListener {
+            override fun onDownloadStart(
+                url: String, userAgent: String,
+                contentDisposition: String, mimetype: String,
+                contentLength: Long
+            ) {
+
+                //getting file name from url
+                val filename = URLUtil.guessFileName(url, contentDisposition, mimetype)
+                //DownloadManager.Request created with url.
+                val request = DownloadManager.Request(Uri.parse(url))
+                //cookie
+                val cookie = CookieManager.getInstance().getCookie(url)
+                //Add cookie and User-Agent to request
+                request.addRequestHeader("Cookie", cookie)
+                request.addRequestHeader("User-Agent", userAgent)
+                //file scanned by MediaScannar
+                request.allowScanningByMediaScanner()
+                request.setDescription("Download file...")
+                //Download is visible and its progress, after completion too.
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                //DownloadManager created
+                val downloadmanager =
+                    context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                //Saving file in Download folder
+                request.setDestinationInExternalPublicDir(
+                    Environment.DIRECTORY_DOWNLOADS,
+                    filename
+                )
+                //download enqued
+                downloadmanager.enqueue(request)
+
+                Toast.makeText(context, "Downloading file", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
         initWebview()
+
     }
 
     private fun initWebview() {
