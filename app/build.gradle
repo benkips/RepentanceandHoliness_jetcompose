@@ -14,7 +14,7 @@ android {
         applicationId "www.digitalexperts.church_traker"
         minSdk 21
         targetSdk 33
-        versionCode 77
+        versionCode 78
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

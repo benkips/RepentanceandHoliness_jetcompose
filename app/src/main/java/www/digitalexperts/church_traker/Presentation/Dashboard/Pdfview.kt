@@ -1,8 +1,12 @@
 package www.digitalexperts.church_traker.Presentation.Dashboard
 
+import android.os.Build
 import android.util.Log
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
@@ -19,7 +25,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,10 +39,13 @@ import androidx.compose.ui.window.DialogProperties
 import com.rajat.pdfviewer.PdfRendererView
 import com.rajat.pdfviewer.compose.PdfRendererViewCompose
 import www.digitalexperts.church_traker.R
+import www.digitalexperts.church_traker.Util.DownloadFile
 
+@RequiresApi(Build.VERSION_CODES.M)
 @Composable
 fun Pdfview(document:String) {
     val visibility = remember { mutableStateOf(false) }
+    val contextForToast = LocalContext.current.applicationContext
     /*   val pdfState = rememberVerticalPdfReaderState(
         resource = ResourceType.Remote("https://repentanceandholinessinfo.com/documents/$document"),
         isZoomEnable = true,
@@ -114,6 +125,8 @@ fun Pdfview(document:String) {
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
+
+
         val lifecycleOwner = LocalLifecycleOwner.current
         PdfRendererViewCompose(
             url = "https://repentanceandholinessinfo.com/documents/$document",
@@ -149,6 +162,23 @@ fun Pdfview(document:String) {
             }
 
         )
+        Box(modifier = Modifier.fillMaxSize()){
+        FloatingActionButton(
+            modifier = Modifier
+                .padding(bottom = 50.dp, start = 20.dp)
+                .align(alignment = Alignment.BottomStart),
+            backgroundColor =  Color(0xFFD81B60),
+            contentColor = Color.White,
+            onClick = {
+                var downloadFile= DownloadFile(contextForToast)
+                downloadFile.downloadFilepdf("https://repentanceandholinessinfo.com/documents/$document")
+                Toast.makeText(contextForToast, "Downloading ...check your downloads", Toast.LENGTH_SHORT).show()
+
+            }
+        ) {
+            Icon( painter = painterResource(R.drawable.baseline_file_download_24), contentDescription = "UP")
+        }
+        }
 
     }
 

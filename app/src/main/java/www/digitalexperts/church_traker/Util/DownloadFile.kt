@@ -25,4 +25,19 @@ class DownloadFile(private val context:Context) {
         return downloadManager.enqueue(request)
 
     }
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun downloadFilepdf(url:String):Long{
+
+        val request=DownloadManager.Request(url.toUri()).apply {
+            setMimeType("application/pdf")
+            setNotificationVisibility(
+                DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED
+            )
+            val randomNumber = (0..10000).random()
+            setTitle("pdf"+randomNumber+".pdf")
+            setDestinationInExternalFilesDir(context,Environment.DIRECTORY_DOWNLOADS,"vid"+randomNumber+".mp4")
+        }
+        return downloadManager.enqueue(request)
+
+    }
 }
