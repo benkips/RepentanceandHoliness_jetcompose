@@ -114,9 +114,8 @@ fun CallScreen() {
             Row {
 
 
-                Text(text =" +254774445851\n" +
-                        "+254774822266 \n" +
-                        "+ +254774581390  \n" ,
+                Text(text =" +25477445851\n" +
+                        "+25477445850 \n" ,
                     fontSize= 20.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(1.dp))

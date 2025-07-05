@@ -9,7 +9,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -69,7 +72,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        MobileAds.initialize(this) { }
+        MobileAds.initialize(
+            this
+        ) { }
         permissionManager = PermissionManager(this)
 
         var android13perm = ""
@@ -194,7 +199,6 @@ class MainActivity : ComponentActivity() {
                     )
 
                 )
-
                 ModalNavigationDrawer(
                     drawerContent = {
                         ModalDrawerSheet {
@@ -285,9 +289,11 @@ class MainActivity : ComponentActivity() {
                         topBar = {
                             TopAppBar(
                                 modifier = Modifier
-                                    .padding(horizontal = 12.dp, vertical = 6.dp)
+                                    .padding(
+                                        WindowInsets.safeDrawing.asPaddingValues()
+                                    ).padding(horizontal = 12.dp, vertical = 6.dp)
                                     .clip(
-                                        shape = RoundedCornerShape(12.dp),
+                                        shape = RoundedCornerShape(8.dp),
                                     ),
                                 backgroundColor = Color(0xFF0f82d2),
                                 contentColor = Color(0xFFFFFFFF),
@@ -362,7 +368,8 @@ class MainActivity : ComponentActivity() {
 
                                 }
                             }
-                        }
+                        },
+                         contentWindowInsets = WindowInsets.safeDrawing,
                     ) { innerPadding ->
                         Box(
                             modifier = Modifier.padding(
@@ -383,6 +390,7 @@ class MainActivity : ComponentActivity() {
             }
 
         }
+
 
     }
 

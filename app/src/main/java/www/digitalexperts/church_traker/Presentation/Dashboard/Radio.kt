@@ -51,7 +51,6 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import www.digitalexperts.church_traker.R
 import www.digitalexperts.church_traker.Viewmodels.MusicViewModel
-
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
@@ -146,7 +145,7 @@ fun PlayerButtons(
             .size(sideButtonSize)
             .semantics { role = Role.Button }
             .clickable {
-                val url = "https://s3.radio.co/s97f38db97/listen"
+                val url = "https://stream-167.zeno.fm/3gdtad95608uv?zs=xyh0ozKsTYSa3UhavMziNQ"
                 viewModel.setMusicItems(url)
                 status="Refreshing..."
                 Toast
@@ -261,13 +260,10 @@ fun Otherbtns(navController: NavController,viewModel: MusicViewModel) {
         }
         val adWidth = LocalConfiguration.current.screenWidthDp - 32
         // shows an inline adaptive banner test ad
-        AndroidView(
+      AndroidView(
             factory = { context ->
                 AdView(context).apply {
-                    adSize = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(
-                        context,
-                        adWidth
-                    )
+                     setAdSize(AdSize.BANNER)
                     adUnitId = context.getString(R.string.ad_id_banner)
                     loadAd(AdRequest.Builder().build())
                 }

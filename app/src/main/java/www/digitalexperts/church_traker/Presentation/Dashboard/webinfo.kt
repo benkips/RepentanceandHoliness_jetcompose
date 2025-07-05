@@ -2,6 +2,7 @@ package www.digitalexperts.church_traker.Presentation.Dashboard
 
 import android.graphics.Bitmap
 import android.util.Log
+import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Box
@@ -18,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
-import www.digitalexperts.church_traker.Util.DesignedProgressBar
+import www.digitalexperts.church_traker.Util.FullScreenProgressbar
 import www.digitalexperts.church_traker.Viewmodels.Folderviewmodel
 
 @Composable
@@ -26,14 +27,15 @@ fun Webinfo(viewModel: Folderviewmodel){
     var toloadUrl:String=viewModel.foldername.collectAsState().value
     var mystringUrls:String
     val visibility = remember { mutableStateOf(false)}
-
     Log.d("Webinfo", "Webinfo: " + toloadUrl)
     if (toloadUrl.contains("Video"))
         mystringUrls="https://repentanceandholinessinfo.com/videoteachings.php"
     else {
         mystringUrls="https://repentanceandholinessinfo.com/auditeachings.php"
     }
-
+/*    val webViewState = rememberWebViewState(url = mystringUrls)
+    val mContext = LocalContext.current
+    val loadstate=webViewState.loadingState*/
 
   /*  if (visibility.value){
         Dialog(
@@ -118,11 +120,67 @@ Surface(
 
             ) {
                 if (visibility.value){
-                    DesignedProgressBar()
+                    //LinearProgressIndicator()
+                    FullScreenProgressbar()
                 }
+
+
+                //visibility.value = loadstate is LoadingState.Loading
+
+/*                WebView(
+                    modifier = Modifier.fillMaxSize(),
+                    state = webViewState,
+                    captureBackPresses = true,
+                    onCreated = { it : WebView ->
+                        it.settings.javaScriptEnabled = true
+                        it.setDownloadListener(
+                            object : DownloadListener {
+                                override fun onDownloadStart(
+                                    url: String?,
+                                    userAgent: String?,
+                                    contentDisposition: String?,
+                                    mimetype: String?,
+                                    contentLength: Long
+                                ) {
+                                    val request: DownloadManager.Request =
+                                        DownloadManager.Request(Uri.parse(url))
+                                    request.apply {
+                                        setMimeType(mimetype)
+                                        setDescription("Downloading file")
+                                        addRequestHeader("UserAgent", userAgent)
+                                        setTitle(
+                                            URLUtil.guessFileName(
+                                                url,
+                                                contentDisposition,
+                                                mimetype
+                                            )
+                                        )
+                                        setNotificationVisibility(
+                                            DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED
+                                        )
+                                    }
+                                    val downloadManager =mContext.getSystemService(
+                                        Context.DOWNLOAD_SERVICE
+                                    ) as DownloadManager?
+                                    downloadManager?.enqueue(request)
+                                    Toast.makeText(mContext, "Downloading file", Toast.LENGTH_LONG)
+                                        .show()
+                                }
+                            }
+                        )
+                    }
+                )*/
+
+
                 AndroidView(
                     modifier = Modifier.fillMaxSize(),
                     factory = { context ->
+
+                        WebView(context).apply {
+                            layoutParams = ViewGroup.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT
+                            )}
                         WebviewHolder(context = context).apply {
 
                             var webViewClient: WebViewClient = object : WebViewClient() {
