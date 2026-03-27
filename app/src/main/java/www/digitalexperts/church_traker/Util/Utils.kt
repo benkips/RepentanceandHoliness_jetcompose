@@ -26,7 +26,7 @@ fun Context.gotoscreen(screen:String): PendingIntent {
     val pendingintent: PendingIntent = TaskStackBuilder.create(this).run {
         addNextIntentWithParentStack(taskDetailIntent)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            getPendingIntent(REQUEST_CODE, PendingIntent.FLAG_IMMUTABLE)
+            getPendingIntent(REQUEST_CODE, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         }else{
             getPendingIntent(REQUEST_CODE, PendingIntent.FLAG_UPDATE_CURRENT)
         }

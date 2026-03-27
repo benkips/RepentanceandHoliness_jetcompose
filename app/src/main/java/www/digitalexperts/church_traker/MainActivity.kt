@@ -8,11 +8,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -44,6 +48,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.ads.MobileAds
@@ -75,6 +80,7 @@ class MainActivity : ComponentActivity() {
         MobileAds.initialize(
             this
         ) { }
+
         permissionManager = PermissionManager(this)
 
         var android13perm = ""
@@ -289,11 +295,14 @@ class MainActivity : ComponentActivity() {
                         topBar = {
                             TopAppBar(
                                 modifier = Modifier
-                                    .padding(
+                                    /*.padding(
                                         WindowInsets.safeDrawing.asPaddingValues()
-                                    ).padding(horizontal = 12.dp, vertical = 6.dp)
+                                    )*/
+                                    .statusBarsPadding()
+                                    .navigationBarsPadding()
+                                    .padding(horizontal = 6.dp, vertical = 6.dp)
                                     .clip(
-                                        shape = RoundedCornerShape(8.dp),
+                                        shape = RoundedCornerShape(5.dp),
                                     ),
                                 backgroundColor = Color(0xFF0f82d2),
                                 contentColor = Color(0xFFFFFFFF),
@@ -369,9 +378,14 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         },
-                         contentWindowInsets = WindowInsets.safeDrawing,
+                        contentWindowInsets = WindowInsets.safeDrawing,
                     ) { innerPadding ->
-                        Box(
+                        val topPadding = innerPadding.calculateTopPadding()
+                        val bottomPadding = min(
+                            innerPadding.calculateBottomPadding(),
+                            WindowInsets.ime.asPaddingValues().calculateBottomPadding()
+                        )
+                       /*Box(
                             modifier = Modifier.padding(
                                 PaddingValues(
                                     0.dp,
@@ -380,7 +394,15 @@ class MainActivity : ComponentActivity() {
                                     innerPadding.calculateBottomPadding()
                                 )
                             )
-                        ) {
+                        )*/
+                        Box(
+                            modifier = Modifier
+                               /* .padding(PaddingValues(top = topPadding, bottom = bottomPadding))*/
+                                .padding(innerPadding)
+                                .consumeWindowInsets(innerPadding)
+                                .imePadding()
+                        )
+                        {
                             SetupNavHost(navController = navController)
                         }
                     }

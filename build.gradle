@@ -3,7 +3,7 @@ buildscript {
         compose_ui_version = '1.8.3'
         hiltVersion = '2.49'
         retrofit_version = "2.9.0"
-        navigationVersion = '2.4.1'
+        navigationVersion = '2.9.1'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {

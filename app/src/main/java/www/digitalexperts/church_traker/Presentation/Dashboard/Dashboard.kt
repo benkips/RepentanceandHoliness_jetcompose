@@ -7,9 +7,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,14 +28,20 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.findRootCoordinates
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -105,7 +114,8 @@ fun SearchSection(viewModel: Churchviewmodel) {
             modifier = Modifier
                 .background(Color.Transparent)
                 .padding(start = 4.dp, end = 16.dp)
-                .weight(1f),
+                .weight(1f)
+                .positionAwareImePadding(),
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done
             ),
@@ -167,8 +177,8 @@ fun SearchSection(viewModel: Churchviewmodel) {
 fun UserWelcomeStatement() {
     Row(
         modifier = Modifier
-            .padding(horizontal = 12.dp)
-            .padding(top = 8.dp)
+            .padding(horizontal = 6.dp)
+            .padding(top = 6.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -287,4 +297,32 @@ fun ChurchItem(item: ChurchesItem,navController: NavController,viewModel: Church
 
         }
     }
+}
+
+fun Modifier.positionAwareImePadding(): Modifier = composed {
+    // Tracks the amount of padding (in pixels) to apply at the bottom
+    var consumePadding by remember { mutableStateOf(0) }
+    this
+        // Gets the current position and size of the Composable on the screen
+        .onGloballyPositioned { coordinates ->
+            val root = coordinates.findRootCoordinates()
+
+            // Calculates the bottom position of the Composable in the window
+            val bottom = coordinates.positionInWindow().y + coordinates.size.height
+
+            // Computes how much space is between the Composable's bottom and the screen's bottom
+            // This value is then used as padding to keep it above the keyboard
+            consumePadding = (root.size.height - bottom).toInt().coerceAtLeast(0)
+        }
+        // Consumes the calculated padding (converted to dp) to shift the Composable upward
+        .consumeWindowInsets(
+            PaddingValues(
+                bottom = with(androidx.compose.ui.platform.LocalDensity.current) {
+                    consumePadding.toDp()
+                }
+            )
+        )
+
+        // Adds Compose’s built-in imePadding as a fallback for any remaining adjustments
+        .imePadding()
 }
